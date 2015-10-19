@@ -9,7 +9,6 @@ public class Registry {
     static {
         register(ComponentActivationSynchronizer.class);
         register(ComponentAirExchanger.class);
-        register(ComponentBinComputer.class);
         register(ComponentDispenser.class);
         register(ComponentEnergyCost.class);
         register(ComponentGravityGenerator.class);

@@ -4,7 +4,6 @@ import io.github.cosmicdrift.cosmicdrift.World;
 import io.github.cosmicdrift.cosmicdrift.components.Component;
 import io.github.cosmicdrift.cosmicdrift.compents.TileEntity;
 import io.github.cosmicdrift.cosmicdrift.components.ComponentNetwork;
-import io.github.cosmicdrift.cosmicdrift.components.ComponentBinComputer;
 import io.github.cosmicdrift.cosmicdrift.components.ComponentLuaComputer;
 import io.github.cosmicdrift.cosmicdrift.entities.EntityPlayer;
 
@@ -26,8 +25,6 @@ public class ItemNetworkMonitor extends Item {
             for (Component cmp : e.type.components) {
                 if (cmp instanceof ComponentNetwork) {
                     ((ComponentNetwork) cmp).printNetworkDescription((TileEntity) e, w);
-                } else if (cmp instanceof ComponentBinComputer) {
-                    ((ComponentBinComputer) cmp).printNetworkID(e);
                 } else if (cmp instanceof ComponentLuaComputer) {
                     ((ComponentLuaComputer) cmp).printNetworkID(e);
                 }

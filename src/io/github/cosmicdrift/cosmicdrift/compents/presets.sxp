@@ -2,11 +2,6 @@
     (var item-icon "item_power.png")
     (cmp RendererDirectioned "power_" "NetworkPower")
     (cmp NetworkPower 5))
-(preset bin-computer
-    (var item-icon "item_computer.png")
-    (cmp NetworkPower 20)
-    (cmp NetworkData)
-    (cmp BinComputer))
 (preset lua-computer
     (var item-icon "item_computer.png")
     (cmp NetworkPower 20)

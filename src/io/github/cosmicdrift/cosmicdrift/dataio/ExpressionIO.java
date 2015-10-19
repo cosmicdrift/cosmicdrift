@@ -1,8 +1,6 @@
 package io.github.cosmicdrift.cosmicdrift.dataio;
 
 import io.github.cosmicdrift.cosmicdrift.Utils;
-import io.github.cosmicdrift.cosmicdrift.components.Component;
-import io.github.cosmicdrift.cosmicdrift.computer.BinComputerCore;
 
 import java.io.IOException;
 
@@ -56,10 +54,6 @@ public class ExpressionIO implements IO<Object> {
 
     @Override
     public void save(STreeWriter writer, Object object) throws IOException {
-        if (object instanceof BinComputerCore) { // Don't save computer cores.
-            // TODO: Put this in the right place.
-            object = null;
-        }
         if (STreeWriter.isAtom(object)) {
             writer.writeAtom(object, false);
         } else {

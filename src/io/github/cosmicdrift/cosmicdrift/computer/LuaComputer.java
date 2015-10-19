@@ -10,8 +10,8 @@ import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.LinkedList;
 
-import prj.virtlua.SimContext;
-import prj.virtlua.SimMessage;
+import io.github.cosmicdrift.virtlua.SimContext;
+import io.github.cosmicdrift.virtlua.SimMessage;
 
 public class LuaComputer {
 
@@ -45,7 +45,7 @@ public class LuaComputer {
                 break;
             }
             StringBuilder sb = new StringBuilder();
-            try (BufferedReader dataReader = new BufferedReader(new InputStreamReader(BinComputerData.class.getResourceAsStream("/computer/" + line)))) {
+            try (BufferedReader dataReader = new BufferedReader(new InputStreamReader(LuaComputer.class.getResourceAsStream("/computer/" + line)))) {
                 while (true) {
                     String dataLine = dataReader.readLine();
                     if (dataLine == null) {

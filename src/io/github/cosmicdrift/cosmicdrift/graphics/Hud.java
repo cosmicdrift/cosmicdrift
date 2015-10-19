@@ -2,7 +2,6 @@ package io.github.cosmicdrift.cosmicdrift.graphics;
 
 import io.github.cosmicdrift.cosmicdrift.World;
 import io.github.cosmicdrift.cosmicdrift.compents.TileEntity;
-import io.github.cosmicdrift.cosmicdrift.components.ComponentBinComputer;
 import io.github.cosmicdrift.cosmicdrift.components.ComponentLuaComputer;
 import io.github.cosmicdrift.cosmicdrift.entities.EntityPlayer;
 import io.github.cosmicdrift.cosmicdrift.items.Item;
@@ -86,8 +85,7 @@ public class Hud {
                 Font saved = g.getFont();
                 g.setFont(monospaced);
                 FontMetrics cfm = g.getFontMetrics();
-                ComponentBinComputer cpu = b.getComponent(ComponentBinComputer.class);
-                String[] lines = cpu != null ? cpu.getLines(b) : b.getComponent(ComponentLuaComputer.class).getLines(b);
+                String[] lines = b.getComponent(ComponentLuaComputer.class).getLines(b);
                 int y = 100;
                 g.setColor(Color.GRAY);
                 g.fillRoundRect(55, 75, 533, 340, 10, 15);
@@ -137,12 +135,7 @@ public class Hud {
         int bx = (p.x1 + p.x2) / 2 / Tile.TILE_SIZE, by = (p.y1 + p.y2) / 2 / Tile.TILE_SIZE;
         TileEntity b = getActiveComputer(bx, by);
         if (b != null) {
-            ComponentBinComputer cpu = b.getComponent(ComponentBinComputer.class);
-            if (cpu != null) {
-                cpu.keyPress(b, key);
-            } else {
-                b.getComponent(ComponentLuaComputer.class).keyPress(b, key);
-            }
+            b.getComponent(ComponentLuaComputer.class).keyPress(b, key);
         }
     }
 
@@ -150,7 +143,7 @@ public class Hud {
         for (int x = bx - 1; x <= bx + 1; x++) {
             for (int y = by - 1; y <= by + 1; y++) {
                 for (TileEntity t : w.getTileEntities(x, y)) {
-                    if (t.hasComponent(ComponentBinComputer.class) || t.hasComponent(ComponentLuaComputer.class)) {
+                    if (t.hasComponent(ComponentLuaComputer.class)) {
                         return t;
                     }
                 }
