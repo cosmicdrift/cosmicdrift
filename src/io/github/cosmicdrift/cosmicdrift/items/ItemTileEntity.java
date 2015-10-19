@@ -44,7 +44,7 @@ public class ItemTileEntity extends Item {
         if (w.isSolid(x, y) && lsolid != null && lsolid) {
             return false; // Don't place a second solid object.
         }
-        TileEntity out = new TileEntity(type, x, y, vars);
+        TileEntity out = new TileEntity(w, type, x, y, vars);
         w.addTileEntity(out);
         return true;
     }

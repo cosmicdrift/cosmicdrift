@@ -9,22 +9,6 @@ import java.io.IOException;
 public class ExpressionIO implements IO<Object> {
 
     private final CompoundAlternativesIO<?> alt = new CompoundAlternativesIO<>(
-            new WrappedCompoundIO<String, Class<? extends Component>>(new Compound1IO<>("component-ref", new SymbolIO())) {
-                @Override
-                protected Class<? extends Component> convert(String load) throws IOException {
-                    return ComponentIO.loadComponentRef(load);
-                }
-
-                @Override
-                protected String deconvert(Class<? extends Component> load) throws IOException {
-                    return ComponentIO.saveComponentRef(load);
-                }
-
-                @Override
-                public boolean accepts(Object o) {
-                    return o instanceof Class && Component.class.isAssignableFrom((Class) o);
-                }
-            },
             new WrappedCompoundIO<String, PresetRef>(new Compound1IO("preset-ref", new SymbolIO())) {
                 @Override
                 protected PresetRef convert(String load) throws IOException {

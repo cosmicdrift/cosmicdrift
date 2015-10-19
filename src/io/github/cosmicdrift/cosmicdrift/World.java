@@ -27,14 +27,7 @@ public class World {
     private final LinkedList<ConsoleLine> console = new LinkedList<>();
     private final HashMap<Integer, HashMap<Integer, Chunk>> chunks = new HashMap<>();
     private final ArrayList<Chunk> chunkList = new ArrayList<>();
-    private final HashMap<String, TileEntityType> entityTypes = new HashMap<>();
     public EntityPlayer ply;
-
-    public World() throws IOException {
-        for (TileEntityType t : TileEntityType.loadAll(this)) {
-            entityTypes.put(t.typename, t);
-        }
-    }
 
     private void presave() {
         for (Chunk c : chunkList) {
@@ -211,14 +204,6 @@ public class World {
         for (TileEntity ent : getTileEntities(x, y)) {
             ent.onUpdateNearby();
         }
-    }
-
-    public TileEntityType getTileEntityType(String tname) {
-        TileEntityType out = entityTypes.get(tname);
-        if (out == null) {
-            logger.log(Level.SEVERE, "TileEntity does not exist: {0}.", tname);
-        }
-        return out;
     }
 
     public boolean isSolid(int x, int y) {

@@ -12,7 +12,7 @@ public class PresetRef {
     }
 
     public TileEntityType get(World world) {
-        return world.getTileEntityType(name);
+        return TileEntityType.forName(name);
     }
 
     public String getReference() {

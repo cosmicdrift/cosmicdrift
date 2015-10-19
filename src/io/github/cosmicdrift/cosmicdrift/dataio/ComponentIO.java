@@ -1,6 +1,7 @@
 package io.github.cosmicdrift.cosmicdrift.dataio;
 
 import io.github.cosmicdrift.cosmicdrift.components.Component;
+import io.github.cosmicdrift.cosmicdrift.components.Registry;
 
 import java.io.IOException;
 import java.lang.reflect.Constructor;
@@ -60,21 +61,11 @@ public class ComponentIO extends CompoundBaseIO<Component> {
         return o instanceof Component;
     }
 
-    private static final String clsprefix = "io.github.cosmicdrift.cosmicdrift.components.Component";
-
     public static Class<? extends Component> loadComponentRef(String sym) throws IOException {
-        try {
-            return Class.forName(clsprefix + sym).asSubclass(Component.class);
-        } catch (ClassNotFoundException ex) {
-            throw new IOException("Could not load component type: " + sym, ex);
-        }
+        return Registry.forName(sym);
     }
 
     public static String saveComponentRef(Class<? extends Component> load) throws IOException {
-        String clsname = load.getName();
-        if (!clsname.startsWith(clsprefix)) {
-            throw new IOException("Could not save component type: " + load);
-        }
-        return clsname.substring(clsprefix.length());
+        return Registry.forClass(load);
     }
 }

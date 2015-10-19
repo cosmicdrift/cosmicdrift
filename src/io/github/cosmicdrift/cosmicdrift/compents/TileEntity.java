@@ -12,16 +12,18 @@ import java.util.Map;
 
 public class TileEntity {
 
+    public final World world;
     public final TileEntityType type;
     public final int x, y;
     private final HashMap<String, Object> vars = new HashMap<>();
     public String icon;
 
     public World getWorld() {
-        return type.world;
+        return world;
     }
-    
-    public TileEntity(TileEntityType type, int x, int y) {
+
+    public TileEntity(World world, TileEntityType type, int x, int y) {
+        this.world = world;
         this.type = type;
         this.x = x;
         this.y = y;
@@ -31,7 +33,8 @@ public class TileEntity {
         }
     }
 
-    public TileEntity(TileEntityType type, int x, int y, Map<String, Object> updates) {
+    public TileEntity(World world, TileEntityType type, int x, int y, Map<String, Object> updates) {
+        this.world = world;
         this.type = type;
         this.x = x;
         this.y = y;
@@ -41,8 +44,9 @@ public class TileEntity {
             cmp.initialize(this);
         }
     }
-    
-    TileEntity(TileEntityType type, int x, int y, Map<String, Object> updates, String icon) {
+
+    TileEntity(World world, TileEntityType type, int x, int y, Map<String, Object> updates, String icon) {
+        this.world = world;
         this.type = type;
         this.x = x;
         this.y = y;
@@ -66,7 +70,7 @@ public class TileEntity {
     public String getIcon() {
         return icon;
     }
-    
+
     public Map<String, Object> getVarView() {
         return Collections.unmodifiableMap(vars);
     }

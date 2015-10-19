@@ -22,12 +22,6 @@ import java.util.Map;
 
 public class TileEntityTypeIO implements IO<TileEntityType> {
 
-    public final World world;
-
-    public TileEntityTypeIO(World world) {
-        this.world = world;
-    }
-
     private final IO<Entry> lineLoader = new CompoundAlternativesIO<>( // TODO: This can probably be cleaned up just a bit.
             new WrappedCompoundIO<Compound2<String, Object>, Entry>(new Compound2IO<>("var",
                             new SymbolIO(),
@@ -101,7 +95,7 @@ public class TileEntityTypeIO implements IO<TileEntityType> {
             }
         }
 
-        return new TileEntityType(world, load.head, components.toArray(new Component[components.size()]), vars);
+        return new TileEntityType(load.head, components.toArray(new Component[components.size()]), vars);
     }
 
     @Override

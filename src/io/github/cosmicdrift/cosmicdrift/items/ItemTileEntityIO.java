@@ -33,7 +33,7 @@ public class ItemTileEntityIO extends CompoundBaseIO<ItemTileEntity> {
     @Override
     protected ItemTileEntity loadEnd(STreeReader reader) throws IOException {
         String icon = reader.readString();
-        TileEntityType type = world.getTileEntityType(reader.readSymbol());
+        TileEntityType type = TileEntityType.forName(reader.readSymbol());
         HashMap<String, Object> vars = new HashMap<>();
         for (Compound2<String, Object> var : varIO.load(reader)) {
             vars.put(var.a, var.b);

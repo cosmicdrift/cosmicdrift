@@ -28,7 +28,7 @@ public class TileEntityIO implements IO<TileEntity> {
     @Override
     public TileEntity load(STreeReader reader) throws IOException {
         reader.beginList();
-        TileEntity out = new TileEntity(world.getTileEntityType(reader.readSymbol()), reader.readInteger(), reader.readInteger(), readVars(reader), reader.readString());
+        TileEntity out = new TileEntity(world, TileEntityType.forName(reader.readSymbol()), reader.readInteger(), reader.readInteger(), readVars(reader), reader.readString());
         reader.endList();
         return out;
     }

@@ -1,6 +1,6 @@
 (preset conductive-wire
     (var item-icon "item_power.png")
-    (cmp RendererDirectioned "power_" (component-ref NetworkPower))
+    (cmp RendererDirectioned "power_" "NetworkPower")
     (cmp NetworkPower 5))
 (preset bin-computer
     (var item-icon "item_computer.png")
@@ -17,7 +17,7 @@
     (cmp Dispenser "Activated Data Wire Dispenser." (preset-ref data-wire)))
 (preset data-wire
     (var item-icon "item_data.png")
-    (cmp RendererDirectioned "data_" (component-ref NetworkData))
+    (cmp RendererDirectioned "data_" "NetworkData")
     (cmp NetworkData))
 (preset door
     (var solid true)
@@ -30,7 +30,7 @@
     (cmp RendererDual "solid" "door.png" "door_open.png"))
 (preset fluid-pipe
     (var item-icon "item_pipe.png")
-    (cmp RendererDirectioned "pipe_" (component-ref NetworkFluid))
+    (cmp RendererDirectioned "pipe_" "NetworkFluid")
     (cmp NetworkFluid 100))
 (preset gravity
     (var enabled true)
@@ -69,7 +69,7 @@
 (preset wall
     (var solid true)
     (var item-icon "item_wall.png")
-    (cmp RendererDirectioned "wall_" (component-ref MarkerWall)
+    (cmp RendererDirectioned "wall_" "MarkerWall"
         (list "pillar" "cap_r"     "cap_l"     "horiz_0"
               "cap_d"  "corner_ul" "corner_ur" "pillar"
               "cap_u"  "corner_dl" "corner_dr" "pillar"

@@ -1,5 +1,6 @@
 package io.github.cosmicdrift.cosmicdrift;
 
+import io.github.cosmicdrift.cosmicdrift.compents.TileEntityType;
 import io.github.cosmicdrift.cosmicdrift.items.Item;
 import io.github.cosmicdrift.cosmicdrift.items.ItemFluidsMonitor;
 import io.github.cosmicdrift.cosmicdrift.items.ItemNetworkMonitor;
@@ -19,16 +20,16 @@ public class Inventory {
     public static Inventory defaultInventory(World w) {
         Inventory out = new Inventory(DEFAULT_INVSIZE);
         for (int i = 0; i < 5; i++) {
-            out.deposit(w.getTileEntityType("fluid-pipe").getAsItemForDrop());
+            out.deposit(TileEntityType.forName("fluid-pipe").getAsItemForDrop());
         }
         for (int i = 0; i < 5; i++) {
-            out.deposit(w.getTileEntityType("conductive-wire").getAsItemForDrop());
+            out.deposit(TileEntityType.forName("conductive-wire").getAsItemForDrop());
         }
         for (int i = 0; i < 5; i++) {
-            out.deposit(w.getTileEntityType("data-wire").getAsItemForDrop());
+            out.deposit(TileEntityType.forName("data-wire").getAsItemForDrop());
         }
-        out.deposit(w.getTileEntityType("tank").getAsItemForDrop());
-        out.deposit(w.getTileEntityType("vent").getAsItemForDrop());
+        out.deposit(TileEntityType.forName("tank").getAsItemForDrop());
+        out.deposit(TileEntityType.forName("vent").getAsItemForDrop());
         out.deposit(new ItemWrench());
         out.deposit(new ItemNetworkMonitor());
         out.deposit(new ItemFluidsMonitor());

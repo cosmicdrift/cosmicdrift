@@ -2,6 +2,7 @@ package io.github.cosmicdrift.cosmicdrift.graphics;
 
 import io.github.cosmicdrift.cosmicdrift.World;
 import io.github.cosmicdrift.cosmicdrift.compents.TileEntity;
+import io.github.cosmicdrift.cosmicdrift.compents.TileEntityType;
 import io.github.cosmicdrift.cosmicdrift.tiles.Tile;
 
 import java.io.IOException;
@@ -25,7 +26,7 @@ public class WorldGenerator {
     }
     
     private void entity(int x, int y, String type) {
-        world.addTileEntity(new TileEntity(world.getTileEntityType(type), x, y));
+        world.addTileEntity(new TileEntity(world, TileEntityType.forName(type), x, y));
     }
 
     private void putWall(int x, int y) {
