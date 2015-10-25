@@ -46,7 +46,7 @@ import javax.swing.JPanel;
 
 public class Main extends JPanel { // TODO: Make negative coordinates work better.
 
-    private static final BufferedImage menu = ResourceManager.loadImage("menu_2.png");
+    private static final BufferedImage menu = ResourceManager.loadImage("menu.png");
     private static final BufferedImage death = ResourceManager.loadImage("death_screen.png");
     private static final Clip gameSoundtrack = ResourceManager.loadSound("health_50w_110.wav");
     private static final Clip menuSoundtrack = ResourceManager.loadSound("title_track.wav");
