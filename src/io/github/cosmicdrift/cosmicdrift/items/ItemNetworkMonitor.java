@@ -32,7 +32,7 @@ public class ItemNetworkMonitor extends Item {
 
     @Override
     public String getIcon() {
-        return "item_computer.png";
+        return "item_analyzer_180.png";
     }
 
     @Override

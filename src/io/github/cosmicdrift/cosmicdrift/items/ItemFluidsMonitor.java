@@ -30,7 +30,7 @@ public class ItemFluidsMonitor extends Item {
 
     @Override
     public String getIcon() {
-        return "item_window.png"; // TODO: Needs better icon
+        return "item_analyzer_120.png"; // TODO: Needs better icon
     }
 
     //Determine fluid content of a single tile.
