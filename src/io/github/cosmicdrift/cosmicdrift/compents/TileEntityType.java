@@ -20,18 +20,14 @@ package io.github.cosmicdrift.cosmicdrift.compents;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-import com.google.gson.stream.JsonReader;
 import io.github.cosmicdrift.cosmicdrift.components.CompTypeAdapter;
 import io.github.cosmicdrift.cosmicdrift.items.ItemTileEntity;
 import io.github.cosmicdrift.cosmicdrift.components.Component;
-import io.github.cosmicdrift.cosmicdrift.dataio.STreeReader;
 import io.github.cosmicdrift.cosmicdrift.items.Item;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.lang.reflect.ParameterizedType;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 
@@ -42,16 +38,14 @@ public class TileEntityType {
         if (i == null) {
             throw new IOException("Could not load TileEntity presets!");
         }
+
         GsonBuilder gb = new GsonBuilder().setPrettyPrinting();
         gb.registerTypeHierarchyAdapter(Component.class, new CompTypeAdapter());
         Gson gson = gb.create();
-        Object out = gson.fromJson(new InputStreamReader(i), new TypeToken<ArrayList<TileEntityType>>() {
+
+        Object out = gson.fromJson(new InputStreamReader(i), new TypeToken<Collection<TileEntityType>>() {
         }.getType());
-        Collection<TileEntityType> types = (ArrayList<TileEntityType>) out;
-        System.out.println("Conversion to JSON:");
-        System.out.println(gson.toJson(types));
-        System.out.println("==============================================");
-        return types;
+        return (Collection<TileEntityType>) out;
     }
 
     private static HashMap<String, TileEntityType> lookup = new HashMap<>();

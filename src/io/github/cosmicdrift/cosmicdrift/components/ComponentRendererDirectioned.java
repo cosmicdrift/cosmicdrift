@@ -59,7 +59,7 @@ public class ComponentRendererDirectioned extends Component {
 
     @Override
     public void onUpdateNearby(TileEntity ent) {
-        Class<? extends Component> class_ = Registry.forName(ctype);
+        Class<? extends Component> class_ = CompRegistry.forName(ctype);
         int i = 0;
         for (TileEntity t : ent.getWorld().getTileEntities(ent.x - 1, ent.y)) {
             if (t.hasComponent(class_)) {

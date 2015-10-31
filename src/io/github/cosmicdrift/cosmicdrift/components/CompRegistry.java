@@ -19,7 +19,7 @@ package io.github.cosmicdrift.cosmicdrift.components;
 
 import java.util.HashMap;
 
-public class Registry {
+public class CompRegistry {
     private static final HashMap<String, Class<? extends Component>> nameToClass = new HashMap<>();
     private static final HashMap<Class<? extends Component>, String> classToName = new HashMap<>();
 

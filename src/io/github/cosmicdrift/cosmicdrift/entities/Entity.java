@@ -22,7 +22,7 @@ import io.github.cosmicdrift.cosmicdrift.tiles.Tile;
 
 public abstract class Entity {
 
-    public final World world;
+    public transient final World world;
     public int x1, y1, x2, y2;
     public int vX, vY;
 

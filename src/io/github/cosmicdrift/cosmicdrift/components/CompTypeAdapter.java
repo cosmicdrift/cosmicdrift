@@ -1,10 +1,7 @@
 package io.github.cosmicdrift.cosmicdrift.components;
 
 import com.google.gson.*;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
 
-import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Type;
@@ -34,7 +31,7 @@ public class CompTypeAdapter implements JsonSerializer<Component>, JsonDeseriali
         if (array.size() < 1) {
             throw new JsonParseException("Not a valid serialized component!");
         }
-        Class<? extends Component> cc = Registry.forName(array.get(0).getAsString());
+        Class<? extends Component> cc = CompRegistry.forName(array.get(0).getAsString());
         Object[] args = new Object[array.size() - 1];
         Constructor<? extends Component> comp = getConstructorN(cc, args.length);
         Type[] types = comp.getGenericParameterTypes();
@@ -51,7 +48,7 @@ public class CompTypeAdapter implements JsonSerializer<Component>, JsonDeseriali
     @Override
     public JsonElement serialize(Component component, Type type, JsonSerializationContext jsonSerializationContext) {
         JsonArray array = new JsonArray();
-        array.add(Registry.forClass(component.getClass()));
+        array.add(CompRegistry.forClass(component.getClass()));
         Object[] args = component.saveAsConstructorArguments();
         Constructor<? extends Component> comp = getConstructorN(component.getClass(), args.length);
         Class<?>[] types = comp.getParameterTypes();

@@ -29,7 +29,7 @@ import java.util.Map;
 
 public class TileEntity {
 
-    public final World world;
+    public transient final World world;
     public final TileEntityType type;
     public final int x, y;
     private final HashMap<String, Object> vars = new HashMap<>();

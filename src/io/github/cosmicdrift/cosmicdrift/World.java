@@ -17,10 +17,13 @@
 */
 package io.github.cosmicdrift.cosmicdrift;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.stream.JsonWriter;
+import io.github.cosmicdrift.cosmicdrift.compents.TileEntityLookupAdapter;
 import io.github.cosmicdrift.cosmicdrift.compents.TileEntity;
 import io.github.cosmicdrift.cosmicdrift.compents.TileEntityType;
-import io.github.cosmicdrift.cosmicdrift.dataio.STreeReader;
-import io.github.cosmicdrift.cosmicdrift.dataio.STreeWriter;
+import io.github.cosmicdrift.cosmicdrift.components.Component;
 import io.github.cosmicdrift.cosmicdrift.entities.Entity;
 import io.github.cosmicdrift.cosmicdrift.entities.EntityItem;
 import io.github.cosmicdrift.cosmicdrift.entities.EntityPlayer;
@@ -28,14 +31,14 @@ import io.github.cosmicdrift.cosmicdrift.graphics.ConsoleLine;
 import io.github.cosmicdrift.cosmicdrift.items.Item;
 import io.github.cosmicdrift.cosmicdrift.tiles.Tile;
 
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.zip.GZIPOutputStream;
 
 public class World {
 
@@ -63,12 +66,9 @@ public class World {
     }
     
     public static World load(String filename) throws IOException {
-        WorldIO wio = new WorldIO();
-        World out;
         System.out.println("Loading...");
-        try (STreeReader reader = STreeReader.loadZipped(filename)) {
-            out = wio.load(reader);
-        }
+        World out = new World();
+        out.addChunksFromLoad(SaveLoad.load(filename));
         System.out.println("Postloading...");
         out.postsave();
         System.out.println("Loaded!");
@@ -76,14 +76,11 @@ public class World {
     }
 
     public void save(String filename) throws IOException {
-        WorldIO wio = new WorldIO();
         System.out.println("Presaving...");
         this.presave();
         try {
             System.out.println("Saving...");
-            try (STreeWriter writer = STreeWriter.saveZipped(filename)) {
-                wio.save(writer, this);
-            }
+            SaveLoad.save(this.chunkList, filename);
         } finally {
             System.out.println("Postsaving...");
             this.postsave();
@@ -97,10 +94,6 @@ public class World {
 
     public Iterable<Chunk> getChunkList() {
         return chunkList;
-    }
-
-    public List<Chunk> getChunkFullList() {
-        return Collections.unmodifiableList(chunkList);
     }
 
     void addChunksFromLoad(List<Chunk> adding) throws IOException {

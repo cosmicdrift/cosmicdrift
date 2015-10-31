@@ -45,13 +45,13 @@ public final class Chunk {
         this.contents = new Tile[CHUNK_SIZE][CHUNK_SIZE];
     }
 
-    Chunk(int cx, int cy, Tile[][] contents, ArrayList<Entity> entities, List<TileEntity> tileEntities) {
+    Chunk(int cx, int cy, Tile[][] contents, List<Entity> entities, List<TileEntity> tileEntities) {
         this.cx = cx;
         this.cy = cy;
         for (TileEntity ent : tileEntities) {
             addTileEntity(ent.x & 0x3f, ent.y & 0x3f, ent);
         }
-        this.entities = entities;
+        this.entities = new ArrayList<>(entities);
         this.contents = contents;
         if (contents.length != CHUNK_SIZE) {
             throw new RuntimeException("Bad chunk size!");
