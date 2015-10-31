@@ -28,7 +28,7 @@ public class PresetRef {
         this.name = name;
     }
 
-    public TileEntityType get(World world) {
+    public TileEntityType get() {
         return TileEntityType.forName(name);
     }
 

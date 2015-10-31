@@ -46,7 +46,7 @@ public class Registry {
 
     public static void register(Class<? extends Component> componentClass) {
         String name = componentClass.getSimpleName();
-        if (name != null && name.startsWith("Component")) {
+        if (name.startsWith("Component")) {
             register(name.substring("Component".length()), componentClass);
         } else {
             throw new IllegalArgumentException("Autoregistered classes must have names that start with 'Component'!");
@@ -58,6 +58,7 @@ public class Registry {
             throw new IllegalStateException("Component already exists/already found: " + name);
         }
         nameToClass.put(name, componentClass);
+        classToName.put(componentClass, name);
     }
 
     public static Class<? extends Component> forName(String name) {

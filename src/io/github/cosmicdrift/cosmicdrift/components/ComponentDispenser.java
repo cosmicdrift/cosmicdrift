@@ -42,7 +42,7 @@ public class ComponentDispenser extends Component {
         if (dist > Tile.TILE_SIZE * 3) {
             return false;
         }
-        ent.getWorld().ply.inv.deposit(item.get(ent.getWorld()).getAsItemForDrop());
+        ent.getWorld().ply.inv.deposit(item.get().getAsItemForDrop());
         return true;
     }
 }

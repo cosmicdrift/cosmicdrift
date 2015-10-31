@@ -38,11 +38,8 @@ public class ComponentRendererDirectioned extends Component {
         this.lookup = defaultLookup;
     }
 
-    public ComponentRendererDirectioned(String prefix, String ctype, List<String> lookup) {
-        this(prefix, ctype, lookup.toArray(new String[lookup.size()]));
-    }
-
-    private ComponentRendererDirectioned(String prefix, String ctype, String... lookup) {
+    public ComponentRendererDirectioned(String prefix, String ctype, List<String> list) {
+        String[] lookup = list.toArray(new String[list.size()]);
         this.prefix = prefix;
         this.ctype = ctype;
         this.lookup = lookup;

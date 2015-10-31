@@ -18,8 +18,11 @@
 package io.github.cosmicdrift.cosmicdrift.compents;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+import com.google.gson.stream.JsonReader;
+import io.github.cosmicdrift.cosmicdrift.components.CompTypeAdapter;
 import io.github.cosmicdrift.cosmicdrift.items.ItemTileEntity;
-import io.github.cosmicdrift.cosmicdrift.World;
 import io.github.cosmicdrift.cosmicdrift.components.Component;
 import io.github.cosmicdrift.cosmicdrift.dataio.STreeReader;
 import io.github.cosmicdrift.cosmicdrift.items.Item;
@@ -27,6 +30,7 @@ import io.github.cosmicdrift.cosmicdrift.items.Item;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -34,22 +38,19 @@ import java.util.HashMap;
 public class TileEntityType {
 
     private static Collection<TileEntityType> loadAll() throws IOException {
-        ArrayList<TileEntityType> types = new ArrayList<>();
-        InputStream i = TileEntityType.class.getResourceAsStream("presets.sxp");
+        InputStream i = TileEntityType.class.getResourceAsStream("presets.json");
         if (i == null) {
             throw new IOException("Could not load TileEntity presets!");
         }
-        Gson gson = new Gson();
-        try (STreeReader reader = new STreeReader(new InputStreamReader(i))) {
-            TileEntityTypeIO loader = new TileEntityTypeIO();
-            while (!reader.isEOF()) {
-                TileEntityType loaded = loader.load(reader);
-                System.out.println("Conversion of " + loaded.typename + " to JSON:");
-                System.out.println(gson.toJson(loaded));
-                System.out.println("==============================================");
-                types.add(loaded);
-            }
-        }
+        GsonBuilder gb = new GsonBuilder().setPrettyPrinting();
+        gb.registerTypeHierarchyAdapter(Component.class, new CompTypeAdapter());
+        Gson gson = gb.create();
+        Object out = gson.fromJson(new InputStreamReader(i), new TypeToken<ArrayList<TileEntityType>>() {
+        }.getType());
+        Collection<TileEntityType> types = (ArrayList<TileEntityType>) out;
+        System.out.println("Conversion to JSON:");
+        System.out.println(gson.toJson(types));
+        System.out.println("==============================================");
         return types;
     }
 
@@ -58,6 +59,9 @@ public class TileEntityType {
     static {
         try {
             for (TileEntityType tile : loadAll()) {
+                if (lookup.containsKey(tile.typename)) {
+                    throw new RuntimeException("Duplicate type: " + tile.typename);
+                }
                 lookup.put(tile.typename, tile);
             }
         } catch (IOException e) {

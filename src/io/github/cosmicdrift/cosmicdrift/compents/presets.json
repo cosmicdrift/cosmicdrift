@@ -1,0 +1,364 @@
+[
+  {
+    "typename": "conductive-wire",
+    "components": [
+      [
+        "RendererDirectioned",
+        "power_",
+        "NetworkPower"
+      ],
+      [
+        "NetworkPower",
+        5
+      ]
+    ],
+    "defaults": {
+      "item-icon": "item_power.png"
+    }
+  },
+  {
+    "typename": "lua-computer",
+    "components": [
+      [
+        "NetworkPower",
+        20
+      ],
+      [
+        "NetworkData"
+      ],
+      [
+        "LuaComputer"
+      ]
+    ],
+    "defaults": {
+      "item-icon": "item_computer.png"
+    }
+  },
+  {
+    "typename": "data-dispenser",
+    "components": [
+      [
+        "RendererSimple",
+        "dispenser.png"
+      ],
+      [
+        "Dispenser",
+        "Activated Data Wire Dispenser.",
+        {
+          "name": "data-wire"
+        }
+      ]
+    ],
+    "defaults": {
+      "item-icon": "item_dispenser.png"
+    }
+  },
+  {
+    "typename": "data-wire",
+    "components": [
+      [
+        "RendererDirectioned",
+        "data_",
+        "NetworkData"
+      ],
+      [
+        "NetworkData"
+      ]
+    ],
+    "defaults": {
+      "item-icon": "item_data.png"
+    }
+  },
+  {
+    "typename": "door",
+    "components": [
+      [
+        "EnergyCost",
+        "solid",
+        50
+      ],
+      [
+        "NetworkPower",
+        50
+      ],
+      [
+        "NetworkDataEndpoint",
+        "solid"
+      ],
+      [
+        "ActivationSynchronizer",
+        "solid"
+      ],
+      [
+        "ToggleButton",
+        "solid",
+        1,
+        3
+      ],
+      [
+        "RendererDual",
+        "solid",
+        "door.png",
+        "door_open.png"
+      ]
+    ],
+    "defaults": {
+      "solid": true,
+      "item-icon": "item_door.png"
+    }
+  },
+  {
+    "typename": "fluid-pipe",
+    "components": [
+      [
+        "RendererDirectioned",
+        "pipe_",
+        "NetworkFluid"
+      ],
+      [
+        "NetworkFluid",
+        100,
+        false
+      ]
+    ],
+    "defaults": {
+      "item-icon": "item_pipe.png"
+    }
+  },
+  {
+    "typename": "gravity",
+    "components": [
+      [
+        "RendererDual",
+        "enabled",
+        "grav_on.png",
+        "grav_off.png"
+      ],
+      [
+        "NetworkPower",
+        30
+      ],
+      [
+        "NetworkDataEndpoint",
+        "enabled"
+      ],
+      [
+        "PowerConsumer",
+        "enabled",
+        1
+      ],
+      [
+        "GravityGenerator",
+        "enabled"
+      ],
+      [
+        "ToggleButton",
+        "enabled",
+        0,
+        5
+      ]
+    ],
+    "defaults": {
+      "item-icon": "item_gravity.png",
+      "enabled": true
+    }
+  },
+  {
+    "typename": "medkit",
+    "components": [
+      [
+        "RendererSimple",
+        "healthpack.png"
+      ],
+      [
+        "Medkit",
+        "supply"
+      ]
+    ],
+    "defaults": {
+      "item-icon": "item_healthpack.png",
+      "supply": 50
+    }
+  },
+  {
+    "typename": "pipe-dispenser",
+    "components": [
+      [
+        "RendererSimple",
+        "dispenser.png"
+      ],
+      [
+        "Dispenser",
+        "Activated Pipe Dispenser.",
+        {
+          "name": "fluid-pipe"
+        }
+      ]
+    ],
+    "defaults": {
+      "item-icon": "item_dispenser.png"
+    }
+  },
+  {
+    "typename": "tank-dispenser",
+    "components": [
+      [
+        "RendererSimple",
+        "dispenser.png"
+      ],
+      [
+        "Dispenser",
+        "Activated Tank Dispenser.",
+        {
+          "name": "tank"
+        }
+      ]
+    ],
+    "defaults": {
+      "item-icon": "item_dispenser.png"
+    }
+  },
+  {
+    "typename": "tank",
+    "components": [
+      [
+        "NetworkFluid",
+        30000,
+        true
+      ],
+      [
+        "NetworkDataEndpoint",
+        null
+      ],
+      [
+        "RendererSimple",
+        "tank.png"
+      ]
+    ],
+    "defaults": {
+      "item-icon": "item_tank.png",
+      "preserveO2": 30000
+    }
+  },
+  {
+    "typename": "vent-dispenser",
+    "components": [
+      [
+        "RendererSimple",
+        "dispenser.png"
+      ],
+      [
+        "Dispenser",
+        "Activated Vent Dispenser.",
+        {
+          "name": "vent"
+        }
+      ]
+    ],
+    "defaults": {
+      "item-icon": "item_dispenser.png"
+    }
+  },
+  {
+    "typename": "vent",
+    "components": [
+      [
+        "NetworkFluid",
+        100,
+        false
+      ],
+      [
+        "RendererSimple",
+        "vent.png"
+      ],
+      [
+        "AirExchanger"
+      ]
+    ],
+    "defaults": {
+      "item-icon": "item_vent.png"
+    }
+  },
+  {
+    "typename": "wall",
+    "components": [
+      [
+        "RendererDirectioned",
+        "wall_",
+        "MarkerWall",
+        [
+          "pillar",
+          "cap_r",
+          "cap_l",
+          "horiz_0",
+          "cap_d",
+          "corner_ul",
+          "corner_ur",
+          "pillar",
+          "cap_u",
+          "corner_dl",
+          "corner_dr",
+          "pillar",
+          "vert_0",
+          "pillar",
+          "pillar",
+          "pillar"
+        ]
+      ],
+      [
+        "MarkerWall"
+      ]
+    ],
+    "defaults": {
+      "solid": true,
+      "item-icon": "item_structure.png"
+    }
+  },
+  {
+    "typename": "wire-dispenser",
+    "components": [
+      [
+        "RendererSimple",
+        "dispenser.png"
+      ],
+      [
+        "Dispenser",
+        "Activated Wire Dispenser.",
+        {
+          "name": "conductive-wire"
+        }
+      ]
+    ],
+    "defaults": {
+      "item-icon": "item_dispenser.png"
+    }
+  },
+  {
+    "typename": "zpm",
+    "components": [
+      [
+        "RendererDual",
+        "enabled",
+        "generator_on.png",
+        "generator_off.png"
+      ],
+      [
+        "NetworkPower",
+        500
+      ],
+      [
+        "NetworkDataEndpoint",
+        "enabled"
+      ],
+      [
+        "PowerGenerator",
+        "enabled",
+        10
+      ]
+    ],
+    "defaults": {
+      "item-icon": "item_generator.png",
+      "enabled": true
+    }
+  }
+]
