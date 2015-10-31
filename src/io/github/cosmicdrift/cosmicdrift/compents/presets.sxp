@@ -8,7 +8,8 @@
     (cmp NetworkData)
     (cmp LuaComputer))
 (preset data-dispenser
-    (cmp RendererSimple "machine.png")
+    (var item-icon "item_dispenser.png")
+    (cmp RendererSimple "dispenser.png")
     (cmp Dispenser "Activated Data Wire Dispenser." (preset-ref data-wire)))
 (preset data-wire
     (var item-icon "item_data.png")
@@ -39,13 +40,16 @@
 (preset medkit
     ; TODO: regenerate using energy?
     (var supply 50)
+    (var item-icon "item_healthpack.png")
     (cmp RendererSimple "healthpack.png")
     (cmp Medkit "supply"))
 (preset pipe-dispenser
-    (cmp RendererSimple "machine.png")
+    (var item-icon "item_dispenser.png")
+    (cmp RendererSimple "dispenser.png")
     (cmp Dispenser "Activated Pipe Dispenser." (preset-ref fluid-pipe)))
 (preset tank-dispenser
-    (cmp RendererSimple "machine.png")
+    (var item-icon "item_dispenser.png")
+    (cmp RendererSimple "dispenser.png")
     (cmp Dispenser "Activated Tank Dispenser." (preset-ref tank)))
 (preset tank
     (var item-icon "item_tank.png")
@@ -54,7 +58,8 @@
     (cmp NetworkDataEndpoint null)
     (cmp RendererSimple "tank.png"))
 (preset vent-dispenser
-    (cmp RendererSimple "machine.png")
+    (var item-icon "item_dispenser.png")
+    (cmp RendererSimple "dispenser.png")
     (cmp Dispenser "Activated Vent Dispenser." (preset-ref vent)))
 (preset vent
     (var item-icon "item_vent.png")
@@ -63,7 +68,7 @@
     (cmp AirExchanger))
 (preset wall
     (var solid true)
-    (var item-icon "item_wall.png")
+    (var item-icon "item_structure.png")
     (cmp RendererDirectioned "wall_" "MarkerWall"
         (list "pillar" "cap_r"     "cap_l"     "horiz_0"
               "cap_d"  "corner_ul" "corner_ur" "pillar"
@@ -71,10 +76,12 @@
               "vert_0" "pillar"    "pillar"    "pillar"))
     (cmp MarkerWall))
 (preset wire-dispenser
-    (cmp RendererSimple "machine.png")
+    (var item-icon "item_dispenser.png")
+    (cmp RendererSimple "dispenser.png")
     (cmp Dispenser "Activated Wire Dispenser." (preset-ref conductive-wire)))
 (preset zpm
     (var enabled true)
+    (var item-icon "item_generator.png")
     (cmp RendererDual "enabled" "generator_on.png" "generator_off.png")
     (cmp NetworkPower 500)
     (cmp NetworkDataEndpoint "enabled")
