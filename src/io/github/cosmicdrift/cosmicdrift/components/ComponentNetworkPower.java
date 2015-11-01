@@ -48,4 +48,25 @@ public final class ComponentNetworkPower extends ComponentNetwork<NetworkType.Po
     public boolean requestPowerOrNothing(TileEntity ent, int amount) {
         return NetworkType.requestPowerOrNothing(ent, this, amount);
     }
+
+    @Override
+    public void initialize(TileEntity ent) {
+        if (ent.<Integer>get("preservePower") == null) {
+            ent.set("preservePower", 0);
+        }
+        super.initialize(ent);
+    }
+
+    public void receivePreserved(TileEntity ent, int power) {
+        if (ent.<Integer>get("preservePower") != 0) {
+            throw new RuntimeException("Add power to already-preserved node!");
+        }
+        ent.<Integer>set("preservePower", power);
+    }
+
+    public int dumpPreserved(TileEntity ent) {
+        int out = ent.<Integer>get("preservePower");
+        ent.<Integer>set("preservePower", 0);
+        return out;
+    }
 }

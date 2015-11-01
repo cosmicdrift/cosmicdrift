@@ -36,6 +36,7 @@ public class EntityPlayer extends Entity {
         this.inv = inv;
     }
 
+
     public void breathe(Tile tile) {
         if (oxygen <= 20 && HP > 0) {
             HP--;

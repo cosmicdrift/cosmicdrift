@@ -43,7 +43,7 @@ public class ComponentLuaComputer extends Component {
 
     @Override
     public void postsave(TileEntity ent) {
-        ent.<Short>set("cpu-netid", ent.<Integer>get("cpu-netid").shortValue());
+        ent.<Short>set("cpu-netid", ent.<Number>get("cpu-netid").shortValue());
     }
 
     @Override

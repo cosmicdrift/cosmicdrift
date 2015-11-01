@@ -49,7 +49,10 @@ public abstract class ComponentNetwork<T extends Network> extends Component {
 
     @Override
     public void presave(TileEntity ent) {
-        setNetwork(ent, null);
+        getNetwork(ent).removeForSave(ent, this);
+        if (getNetwork(ent) != null) {
+            throw new IllegalStateException();
+        }
     }
 
     @Override

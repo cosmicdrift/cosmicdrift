@@ -29,7 +29,7 @@ import java.util.Map;
 
 public class TileEntity {
 
-    public transient final World world;
+    public final World world;
     public final TileEntityType type;
     public final int x, y;
     private final HashMap<String, Object> vars = new HashMap<>();
@@ -179,5 +179,10 @@ public class TileEntity {
             cmp.onVariableChange(this, var, o);
         }
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "tileent:" + type.typename + "@" + Integer.toHexString(hashCode());
     }
 }

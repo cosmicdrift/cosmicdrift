@@ -21,7 +21,7 @@ import io.github.cosmicdrift.cosmicdrift.World;
 import io.github.cosmicdrift.cosmicdrift.compents.TileEntity;
 import java.util.Random;
 
-public class Tile {
+public class Tile implements Cloneable {
 
     public static final int TILE_SIZE = 25;
 
@@ -32,6 +32,10 @@ public class Tile {
         this.o2 = o2;
         this.co2 = co2;
         this.n2 = n2;
+    }
+
+    public Tile(Tile tile) {
+        this(tile.o2, tile.co2, tile.n2);
     }
 
     @Override

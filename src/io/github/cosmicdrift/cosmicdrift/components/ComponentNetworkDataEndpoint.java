@@ -48,7 +48,7 @@ public class ComponentNetworkDataEndpoint extends ComponentNetworkData {
     @Override
     public void postsave(TileEntity ent) {
         super.postsave(ent);
-        ent.<Short>set("data-netid", ent.<Integer>get("data-netid").shortValue());
+        ent.<Short>set("data-netid", ent.<Number>get("data-netid").shortValue());
     }
 
     @Override

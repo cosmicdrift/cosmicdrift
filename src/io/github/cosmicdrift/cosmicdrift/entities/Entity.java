@@ -20,13 +20,18 @@ package io.github.cosmicdrift.cosmicdrift.entities;
 import io.github.cosmicdrift.cosmicdrift.World;
 import io.github.cosmicdrift.cosmicdrift.tiles.Tile;
 
+import java.lang.reflect.Field;
+
 public abstract class Entity {
 
-    public transient final World world;
+    public final World world;
     public int x1, y1, x2, y2;
     public int vX, vY;
 
     public Entity(int x, int y, int width, int height, World world) {
+        if (world == null) {
+            throw new NullPointerException();
+        }
         this.x1 = x;
         this.y1 = y;
         this.x2 = x + width;

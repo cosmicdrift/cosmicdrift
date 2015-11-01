@@ -123,4 +123,16 @@ public final class Chunk {
         tileEntities[x][y].remove(t);
         tileEntityList.remove(t);
     }
+
+    void presave(World world) {
+        for (TileEntity ent : tileEntityList) {
+            ent.presave();
+        }
+    }
+
+    void postsave(World world) {
+        for (TileEntity ent : tileEntityList) {
+            ent.postsave();
+        }
+    }
 }

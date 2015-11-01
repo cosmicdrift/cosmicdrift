@@ -17,13 +17,7 @@
 */
 package io.github.cosmicdrift.cosmicdrift;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.stream.JsonWriter;
-import io.github.cosmicdrift.cosmicdrift.compents.TileEntityLookupAdapter;
 import io.github.cosmicdrift.cosmicdrift.compents.TileEntity;
-import io.github.cosmicdrift.cosmicdrift.compents.TileEntityType;
-import io.github.cosmicdrift.cosmicdrift.components.Component;
 import io.github.cosmicdrift.cosmicdrift.entities.Entity;
 import io.github.cosmicdrift.cosmicdrift.entities.EntityItem;
 import io.github.cosmicdrift.cosmicdrift.entities.EntityPlayer;
@@ -38,7 +32,6 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Logger;
-import java.util.zip.GZIPOutputStream;
 
 public class World {
 
@@ -48,31 +41,30 @@ public class World {
     private final HashMap<Integer, HashMap<Integer, Chunk>> chunks = new HashMap<>();
     private final ArrayList<Chunk> chunkList = new ArrayList<>();
     public EntityPlayer ply;
+    private final SaveLoad saveLoad;
+
+    public World() {
+        saveLoad = new SaveLoad(this);
+    }
 
     private void presave() {
         for (Chunk c : chunkList) {
-            for (TileEntity ent : c.tileEntityList) {
-                ent.presave();
-            }
+            c.presave(this);
         }
     }
 
     private void postsave() {
         for (Chunk c : chunkList) {
-            for (TileEntity ent : c.tileEntityList) {
-                ent.postsave();
-            }
+            c.postsave(this);
         }
     }
-    
-    public static World load(String filename) throws IOException {
+
+    public void load(String filename) throws IOException {
         System.out.println("Loading...");
-        World out = new World();
-        out.addChunksFromLoad(SaveLoad.load(filename));
+        addChunksFromLoad(saveLoad.load(filename));
         System.out.println("Postloading...");
-        out.postsave();
+        postsave();
         System.out.println("Loaded!");
-        return out;
     }
 
     public void save(String filename) throws IOException {
@@ -80,7 +72,7 @@ public class World {
         this.presave();
         try {
             System.out.println("Saving...");
-            SaveLoad.save(this.chunkList, filename);
+            saveLoad.save(this.chunkList, filename);
         } finally {
             System.out.println("Postsaving...");
             this.postsave();

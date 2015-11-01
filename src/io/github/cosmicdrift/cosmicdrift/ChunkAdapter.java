@@ -39,7 +39,7 @@ public class ChunkAdapter implements JsonSerializer<Chunk>, JsonDeserializer<Chu
                     if (num < 0 || num >= types.length) {
                         throw new JsonParseException("Attempt to reference type # that wasn't included!");
                     }
-                    parsedMap[x][y] = types[num];
+                    parsedMap[x][y] = new Tile(types[num]);
                 }
             }
         }

@@ -173,8 +173,11 @@ public class Main extends JPanel { // TODO: Make negative coordinates work bette
                 }
             } else if (x >= 300 && y >= 300 && x <= 530 && y <= 420) {
                 try {
-                    world = World.load("savefile.sxp");
+                    world = new World();
+                    world.load("savefile.json.gz");
+                    world.save("savefile-reflect.json.gz");
                 } catch (IOException ex) {
+                    world = null;
                     throw new RuntimeException("Could not load world!", ex);
                 }
                 hud = new Hud(world);
@@ -250,10 +253,12 @@ public class Main extends JPanel { // TODO: Make negative coordinates work bette
         if (pressedKeys.contains(KeyEvent.VK_L) != saveWasPressed) {
             saveWasPressed = !saveWasPressed;
             if (saveWasPressed) {
-                try {
-                    world.save("savefile.sxp");
-                } catch (IOException ex) {
-                    Logger.getLogger(Main.class.getName()).log(Level.SEVERE, "Error while saving", ex);
+                synchronized (synchObj) {
+                    try {
+                        world.save("savefile.json.gz");
+                    } catch (IOException ex) {
+                        Logger.getLogger(Main.class.getName()).log(Level.SEVERE, "Error while saving", ex);
+                    }
                 }
             }
         }

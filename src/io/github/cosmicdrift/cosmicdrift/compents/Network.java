@@ -17,7 +17,7 @@
 */
 package io.github.cosmicdrift.cosmicdrift.compents;
 
-import io.github.cosmicdrift.cosmicdrift.Utils;
+import io.github.cosmicdrift.cosmicdrift.utils.Utils;
 import io.github.cosmicdrift.cosmicdrift.World;
 import io.github.cosmicdrift.cosmicdrift.components.ComponentNetwork;
 
@@ -40,11 +40,9 @@ public abstract class Network {
         for (TileEntity above : Utils.joinIterables(
                 ent.getWorld().getTileEntities(ent.x, ent.y + 1), ent.getWorld().getTileEntities(ent.x, ent.y - 1),
                 ent.getWorld().getTileEntities(ent.x - 1, ent.y), ent.getWorld().getTileEntities(ent.x + 1, ent.y))) {
-            if (above instanceof TileEntity) {
-                ComponentNetwork lcmp = ((TileEntity) above).getComponent(cmp.type.cls);
-                if (lcmp != null && lcmp.getNetwork((TileEntity) above) != null) {
-                    adjacentNetworks.add(lcmp.getNetwork((TileEntity) above));
-                }
+            ComponentNetwork lcmp = above.getComponent(cmp.type.cls);
+            if (lcmp != null && lcmp.getNetwork(above) != null) {
+                adjacentNetworks.add(lcmp.getNetwork(above));
             }
         }
         if (adjacentNetworks.isEmpty()) {
@@ -57,6 +55,7 @@ public abstract class Network {
                 addTo.joinFrom(itr.next());
             }
         }
+        // TODO: could just recalculate in the second case...
         cmp.getNetwork(ent).recalculate();
     }
 
@@ -86,7 +85,13 @@ public abstract class Network {
         recalculate();
     }
 
-    public void remove(TileEntity ent, ComponentNetwork cmp) {
+    public void removeForSave(TileEntity ent, ComponentNetwork<?> cmp) {
+        cmp.setNetwork(ent, null);
+        contents.remove(ent);
+        recalculate();
+    }
+
+    public void remove(TileEntity ent, ComponentNetwork<?> cmp) {
         cmp.setNetwork(ent, null);
         contents.remove(ent);
         rejoin();

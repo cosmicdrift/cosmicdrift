@@ -25,7 +25,7 @@ public final class ComponentNetworkFluid extends ComponentNetwork<NetworkType.Fl
 
     public final int capacity;
     public final boolean preserveContents;
-    
+
     public ComponentNetworkFluid(int capacity) {
         this(capacity, false);
     }
@@ -41,9 +41,9 @@ public final class ComponentNetworkFluid extends ComponentNetwork<NetworkType.Fl
 
     @Override
     public Object[] saveAsConstructorArguments() {
-        return new Object[] {capacity, preserveContents};
+        return new Object[]{capacity, preserveContents};
     }
-    
+
     @Override
     public void initialize(TileEntity ent) {
         if (ent.<Integer>get("preserveO2") == null) {
@@ -60,7 +60,7 @@ public final class ComponentNetworkFluid extends ComponentNetwork<NetworkType.Fl
 
     public void receivePreserved(TileEntity ent, int o2, int co2, int n2) {
         if (ent.<Integer>get("preserveO2") != 0 || ent.<Integer>get("preserveN2") != 0 || ent.<Integer>get("preserveCO2") != 0) {
-            throw new RuntimeException("Add gas to already-preserved tank!");
+            throw new RuntimeException("Add gas to already-preserved node!");
         }
         ent.set("preserveCO2", co2);
         ent.set("preserveN2", n2);

@@ -87,4 +87,8 @@ public class TileEntityType {
         }
         return new ItemTileEntity(this, null, defaults);
     }
+
+    public String toString() {
+        return "tiletype:" + this.typename;
+    }
 }

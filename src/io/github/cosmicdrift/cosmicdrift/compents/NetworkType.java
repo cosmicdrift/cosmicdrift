@@ -138,7 +138,9 @@ public enum NetworkType {
         public void recalculate() {
             capacity = 0;
             for (TileEntity ent : contents) {
-                capacity += ent.getComponent(ComponentNetworkPower.class).capacity;
+                ComponentNetworkPower cnf = ent.getComponent(ComponentNetworkPower.class);
+                capacity += cnf.capacity;
+                cnf.dumpPreserved(ent);
             }
             checkInvariants();
         }
@@ -150,11 +152,23 @@ public enum NetworkType {
         }
 
         @Override
+        public void removeForSave(TileEntity ent, ComponentNetwork cmpo) {
+            ComponentNetworkPower cmp = (ComponentNetworkPower) cmpo;
+            //Dump proportion of power.
+            double proportion = cmp.capacity / capacity;
+            int actual = (int) (available * proportion);
+            available -= actual;
+            cmp.receivePreserved(ent, actual);
+            super.removeForSave(ent, cmp);
+        }
+
+        @Override
         public void remove(TileEntity ent, ComponentNetwork cmpo) {
             ComponentNetworkPower cmp = (ComponentNetworkPower) cmpo;
-            //Remove pipe's air content from network, and add it to the environment.
+            //Dump proportion of power.
             double proportion = cmp.capacity / capacity;
-            available -= available * proportion;
+            int actual = (int) (available * proportion);
+            available -= actual;
             super.remove(ent, cmp);
         }
     }
@@ -194,19 +208,6 @@ public enum NetworkType {
         @Override
         public void printNetworkDescription(World w) {
             w.print("Fluids Network: ");
-            /*int tanks = 0, pipes = 0, vents = 0;
-             for (ComponentEntity ent : contents) {
-             if (ent instanceof TEntTank) {
-             tanks++;
-             } else if (ent instanceof TEntVent) {
-             vents++;
-             } else {
-             pipes++;
-             }
-             }
-             w.print("#Pipes: " + pipes);
-             w.print("#Tanks: " + tanks);
-             w.print("#Vents: " + vents);*/ // TODO: Readd this functionality
             w.print("#Components: " + contents.size());
             w.print("Capacity: " + capacity);
             w.print("O2: " + o2);
@@ -214,25 +215,20 @@ public enum NetworkType {
             w.print("N2: " + n2);
         }
 
-        public int extractO2(int capacity) {
-            double proportion = capacity / this.capacity;
-            int take = (int) (o2 * proportion);
-            o2 -= proportion;
-            return take;
-        }
-
-        public int extractCO2(int capacity) {
-            double proportion = capacity / this.capacity;
-            int take = (int) (co2 * proportion);
-            co2 -= proportion;
-            return take;
-        }
-
-        public int extractN2(int capacity) {
-            double proportion = capacity / this.capacity;
-            int take = (int) (n2 * proportion);
-            n2 -= proportion;
-            return take;
+        @Override
+        public void removeForSave(TileEntity ent, ComponentNetwork cmpo) {
+            ComponentNetworkFluid cmp = (ComponentNetworkFluid) cmpo;
+            //Remove pipe's air content from network, and keep it in the tank.
+            Tile t = ent.getWorld().getTile(ent.x, ent.y);
+            double proportion = cmp.capacity / (double) this.capacity;
+            int do2 = (int) (this.o2 * proportion), dco2 = (int) (this.co2 * proportion), dn2 = (int) (this.n2 * proportion);
+            if (do2 != 0 || dco2 != 0 || dn2 != 0) {
+                cmp.receivePreserved(ent, do2, dco2, dn2);
+                this.o2 -= do2;
+                this.co2 -= dco2;
+                this.n2 -= dn2;
+            }
+            super.removeForSave(ent, cmp);
         }
 
         @Override
