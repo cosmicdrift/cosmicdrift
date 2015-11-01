@@ -1,5 +1,14 @@
 language: java
 jdk:
- - oraclejdk8
+- oraclejdk8
 script:
- - ant
+- ant
+deploy:
+  provider: releases
+  api_key:
+    secure: 6h4ABX6mbirk9smh/rgGsIrn3Sw33V3UcyKdfsDIE35mQgC2rm2IQ3syjC5QxGB9jFBMSpk+dXlA2jA6LH+8wpV0GH3paFhNdXXWL8neIjQF6TNMRn53SlHNzayQNxJlZyvxd0l/ynUHRx0PFUq/+YT03OwFtVntJUIMZnblIPlz4+T32L8qqBVP97tEWOT5XVjNzKMZ8M4C/HJ1t+8ZRf+WlRautf8lL/UzC6Zy7jQBIuSvOEjX+nx35qJrGcT5/oaTrRi/bKwLP675p6ClqPrjZSmWOnClCIe+qJxD4Z+r59NkktVircqeDh+6WCZ2Mrcmk0mE/ttGCYKFJkmHzyQ+LXZP2CJF2JTDCVPaBI5Y95K6iHIQ3/zfyGQMonxkH6rfI8QcruGdnTuf1mFSmnc5NekNPnzcYRChjjmJ0rxBjxsCiyhdiblehuKekZyY/nB0eldvu2of0CSNauj1kftecC61dJnHXuE3NOn1arfDCDx5wSjJrWUDUnVXoSGNrALYG9Rf2sUADQkpAle5WrRPdzxygq5+3iuh+mBrcSmUl6obBQ6e+zGl81BA5frI5tV9bhnUZwBiGjNC9Z7nazvkrG+nWTMegEE+dwQWxsQfHcNPBwX0uVnIIIfVUMlQMRJ6baopm23Tkqcs5LPldHMqYgzhHuGIVL0FDFvI2To=
+  file: cosmic-drift.jar
+  skip_cleanup: true
+  on:
+    tags: true
+    repo: cosmicdrift/cosmicdrift
