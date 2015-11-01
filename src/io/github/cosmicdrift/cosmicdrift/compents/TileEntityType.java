@@ -21,31 +21,25 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import io.github.cosmicdrift.cosmicdrift.components.CompTypeAdapter;
+import io.github.cosmicdrift.cosmicdrift.graphics.ResourceManager;
 import io.github.cosmicdrift.cosmicdrift.items.ItemTileEntity;
 import io.github.cosmicdrift.cosmicdrift.components.Component;
 import io.github.cosmicdrift.cosmicdrift.items.Item;
+import io.github.cosmicdrift.cosmicdrift.utils.Utils;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.Collection;
 import java.util.HashMap;
 
 public class TileEntityType {
 
+    private static final Gson gson = new GsonBuilder().registerTypeHierarchyAdapter(Component.class, new CompTypeAdapter()).create();
+
     private static Collection<TileEntityType> loadAll() throws IOException {
-        InputStream i = TileEntityType.class.getResourceAsStream("presets.json");
-        if (i == null) {
-            throw new IOException("Could not load TileEntity presets!");
-        }
-
-        GsonBuilder gb = new GsonBuilder().setPrettyPrinting();
-        gb.registerTypeHierarchyAdapter(Component.class, new CompTypeAdapter());
-        Gson gson = gb.create();
-
-        Object out = gson.fromJson(new InputStreamReader(i), new TypeToken<Collection<TileEntityType>>() {
-        }.getType());
-        return (Collection<TileEntityType>) out;
+        return Utils.loadGsonList(gson, ResourceManager.loadReader("presets.json"), TileEntityType.class);
     }
 
     private static HashMap<String, TileEntityType> lookup = new HashMap<>();

@@ -17,8 +17,15 @@
 */
 package io.github.cosmicdrift.cosmicdrift.utils;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 import java.io.IOException;
+import java.io.Reader;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.Iterator;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 public class Utils {
@@ -66,5 +73,24 @@ public class Utils {
     @SuppressWarnings("unchecked")
     public static <T> Class<T> getGenericClass(T t) {
         return (Class<T>) t.getClass();
+    }
+
+    public static <T> List<T> loadGsonList(Gson g, Reader r, Class<T> element) {
+        return g.fromJson(r, new ParameterizedType() {
+            @Override
+            public Type[] getActualTypeArguments() {
+                return new Type[]{element};
+            }
+
+            @Override
+            public Type getRawType() {
+                return List.class;
+            }
+
+            @Override
+            public Type getOwnerType() {
+                return null;
+            }
+        });
     }
 }

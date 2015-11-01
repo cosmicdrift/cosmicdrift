@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="cosmic-drift" default="all">
+
+    <dirname property="basedir" file="${ant.file}"/>
+
+    <property name="gson" value="${basedir}/gson-2.4.jar"/>
+    <property name="build.dir" value="${basedir}/build"/>
+    <property file="version.properties"/>
+
+    <target name="all">
+        <delete dir="${build.dir}"/>
+        <mkdir dir="${build.dir}"/>
+        <javac destdir="${build.dir}" debug="false" source="8" encoding="UTF-8" includeantruntime="false">
+            <src path="${basedir}/src:${basedir}/virtlua/src"/>
+            <classpath path="${gson}"/>
+        </javac>
+
+        <copy todir="${build.dir}">
+            <fileset dir="${basedir}/virtlua/resources"/>
+            <fileset dir="${basedir}/resources"/>
+            <zipfileset src="${gson}" excludes="META-INF/**/*"/>
+        </copy>
+
+        <jar destfile="cosmic-drift-${cosmic-drift.version}.jar" basedir="${build.dir}" duplicate="fail">
+            <manifest>
+                <attribute name="Main-Class" value="io.github.cosmicdrift.cosmicdrift.graphics.Main" />
+            </manifest>
+        </jar>
+    </target>
+</project>

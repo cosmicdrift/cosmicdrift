@@ -20,12 +20,7 @@ package io.github.cosmicdrift.cosmicdrift.graphics;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -136,5 +131,13 @@ public class ResourceManager {
             }
             return builder.toString();
         }
+    }
+
+    public static InputStream loadInputStream(String path) throws IOException {
+        return getResource(path, false);
+    }
+
+    public static Reader loadReader(String path) throws IOException {
+        return new InputStreamReader(loadInputStream(path));
     }
 }
