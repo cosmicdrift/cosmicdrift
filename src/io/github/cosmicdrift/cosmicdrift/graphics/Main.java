@@ -26,6 +26,7 @@ import io.github.cosmicdrift.cosmicdrift.entities.Entity;
 import io.github.cosmicdrift.cosmicdrift.entities.EntityPlayer;
 import io.github.cosmicdrift.cosmicdrift.items.Item;
 import io.github.cosmicdrift.cosmicdrift.tiles.Tile;
+import sun.font.FontManagerFactory;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -56,6 +57,7 @@ public class Main extends JPanel { // TODO: Make negative coordinates work bette
     private Hud hud;
     private boolean playedDeadSound = false;
     private boolean saveWasPressed = false;
+    private boolean loading = true;
     private final HashSet<Integer> pressedKeys = new HashSet<>();
     private final HashSet<Integer> toggledOnKeys = new HashSet<>();
     private final BufferedImage imageBuffer;
@@ -86,6 +88,9 @@ public class Main extends JPanel { // TODO: Make negative coordinates work bette
 
             @Override
             public void keyTyped(KeyEvent e) {
+                if (m.loading || m.world == null) {
+                    return;
+                }
                 if (m.toggledOnKeys.contains(KeyEvent.VK_BACK_QUOTE)) {
                     char key = e.getKeyChar();
                     if (key != KeyEvent.CHAR_UNDEFINED && key != '`') {
@@ -106,6 +111,9 @@ public class Main extends JPanel { // TODO: Make negative coordinates work bette
             @Override
             public void mousePressed(MouseEvent e) {
                 synchronized (m.synchObj) {
+                    if (m.loading) {
+                        return;
+                    }
                     m.press(e.getX() - 3, e.getY() - 14, e.getButton());
                 }
             }
@@ -124,6 +132,13 @@ public class Main extends JPanel { // TODO: Make negative coordinates work bette
             @Override
             public void run() {
                 synchronized (synchObj) {
+                    if (loading) {
+                        imageBuffer.createGraphics().drawImage(ResourceManager.loadImage("loading.png"), 0, 0, imageBuffer.getWidth(), imageBuffer.getHeight(), null);
+                        repaint();
+                        FontManagerFactory.getInstance();
+                        loading = false;
+                        return;
+                    }
                     if (world != null) {
                         update();
                         if (world.ply.isDead() && !playedDeadSound) {
@@ -164,7 +179,6 @@ public class Main extends JPanel { // TODO: Make negative coordinates work bette
                 hud = new Hud(world);
                 world.ply = new EntityPlayer(308 * Tile.TILE_SIZE, 308 * Tile.TILE_SIZE, world, Inventory.defaultInventory(world));
                 world.addEntity(world.ply);
-                world.print("Welcome to Cosmic Drift!");
                 if (menuSoundtrack != null) {
                     menuSoundtrack.stop();
                 }
@@ -272,8 +286,12 @@ public class Main extends JPanel { // TODO: Make negative coordinates work bette
 
     private void render(int w, int h, Graphics g) {
         if (world == null) {
+            g.setColor(Color.BLACK);
+            g.fillRect(0, 0, w, h);
             g.drawImage(menu, 0, 0, this);
         } else if (world.ply.isDead()) {
+            g.setColor(Color.BLACK);
+            g.fillRect(0, 0, w, h);
             g.drawImage(death, 0, 0, this);
         } else {
             g.setColor(new Color(10, 10, 10));
