@@ -1,4 +1,5 @@
 language: java
 jdk:
-- oraclejdk8
-script: ./build-full.sh
+ - oraclejdk8
+script:
+ - ant

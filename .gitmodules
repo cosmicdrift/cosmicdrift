@@ -1,0 +1,3 @@
+[submodule "virtlua"]
+	path = virtlua
+	url = https://github.com/cosmicdrift/virtlua

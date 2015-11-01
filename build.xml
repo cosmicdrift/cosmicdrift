@@ -11,7 +11,10 @@
         <delete dir="${build.dir}"/>
         <mkdir dir="${build.dir}"/>
         <javac destdir="${build.dir}" debug="false" source="8" encoding="UTF-8" includeantruntime="false">
-            <src path="${basedir}/src:${basedir}/virtlua/src"/>
+            <src>
+                <file file="${basedir}/virtlua/src" />
+                <file file="${basedir}/src" />
+            </src>
             <classpath path="${gson}"/>
         </javac>
 
