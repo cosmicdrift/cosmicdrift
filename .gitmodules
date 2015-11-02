@@ -1,3 +1,6 @@
 [submodule "virtlua"]
 	path = virtlua
 	url = https://github.com/cosmicdrift/virtlua
+[submodule "audio_resources"]
+	path = audio_resources
+	url = https://github.com/cosmicdrift/cosmicdrift-audio.git
