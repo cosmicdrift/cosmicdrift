@@ -26,7 +26,6 @@ import io.github.cosmicdrift.cosmicdrift.entities.Entity;
 import io.github.cosmicdrift.cosmicdrift.entities.EntityPlayer;
 import io.github.cosmicdrift.cosmicdrift.items.Item;
 import io.github.cosmicdrift.cosmicdrift.tiles.Tile;
-import sun.font.FontManagerFactory;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -36,6 +35,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashSet;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -135,7 +135,12 @@ public class Main extends JPanel { // TODO: Make negative coordinates work bette
                     if (loading) {
                         imageBuffer.createGraphics().drawImage(ResourceManager.loadImage("loading.png"), 0, 0, imageBuffer.getWidth(), imageBuffer.getHeight(), null);
                         repaint();
-                        FontManagerFactory.getInstance();
+                        try {
+                            Class.forName("sun.font.FontManagerFactory").getMethod("getInstance").invoke(null);
+                        } catch (ReflectiveOperationException e) {
+                            System.err.println("Could not preload fonts!");
+                            e.printStackTrace();
+                        }
                         loading = false;
                         return;
                     }
