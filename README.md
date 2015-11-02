@@ -27,8 +27,6 @@ Alternatively, you can open this project in IntelliJ IDEA, and run the project. 
 
 gson-2.4.jar was downloaded from [Maven Central](http://search.maven.org/#artifactdetails|com.google.code.gson|gson|2.4|jar).
 
-If you want, copy the sound resources into the `resources` directory of the project. (Note: due to licensing issues, we can't put them in the main repo yet.)
-
 ## Licensing
 
 See LICENSE.md. A summary: source code is GPL v3+, and artistic assets are CC-BY-SA 4.0.
