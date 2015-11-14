@@ -58,14 +58,14 @@ public final class ComponentNetworkPower extends ComponentNetwork<NetworkType.Po
     }
 
     public void receivePreserved(TileEntity ent, int power) {
-        if (ent.<Integer>get("preservePower") != 0) {
+        if (ent.<Number>get("preservePower").intValue() != 0) {
             throw new RuntimeException("Add power to already-preserved node!");
         }
         ent.<Integer>set("preservePower", power);
     }
 
     public int dumpPreserved(TileEntity ent) {
-        int out = ent.<Integer>get("preservePower");
+        int out = ent.<Number>get("preservePower").intValue();
         ent.<Integer>set("preservePower", 0);
         return out;
     }

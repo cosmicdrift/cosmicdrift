@@ -140,7 +140,7 @@ public enum NetworkType {
             for (TileEntity ent : contents) {
                 ComponentNetworkPower cnf = ent.getComponent(ComponentNetworkPower.class);
                 capacity += cnf.capacity;
-                cnf.dumpPreserved(ent);
+                available += cnf.dumpPreserved(ent);
             }
             checkInvariants();
         }
@@ -155,9 +155,10 @@ public enum NetworkType {
         public void removeForSave(TileEntity ent, ComponentNetwork cmpo) {
             ComponentNetworkPower cmp = (ComponentNetworkPower) cmpo;
             //Dump proportion of power.
-            double proportion = cmp.capacity / capacity;
+            double proportion = cmp.capacity / (double) capacity;
             int actual = (int) (available * proportion);
             available -= actual;
+            capacity -= cmp.capacity;
             cmp.receivePreserved(ent, actual);
             super.removeForSave(ent, cmp);
         }
@@ -166,7 +167,7 @@ public enum NetworkType {
         public void remove(TileEntity ent, ComponentNetwork cmpo) {
             ComponentNetworkPower cmp = (ComponentNetworkPower) cmpo;
             //Dump proportion of power.
-            double proportion = cmp.capacity / capacity;
+            double proportion = cmp.capacity / (double) capacity;
             int actual = (int) (available * proportion);
             available -= actual;
             super.remove(ent, cmp);
