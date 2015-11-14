@@ -1,5 +1,7 @@
 # Cosmic Drift
 
+[![Build Status](https://travis-ci.org/cosmicdrift/cosmicdrift.svg?branch=master)](https://travis-ci.org/cosmicdrift/cosmicdrift)
+
 This is very much WIP, so don't expect much.
 
 ## Trying the game
