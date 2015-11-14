@@ -122,8 +122,7 @@ public abstract class Entity {
         int bx2 = x2 / Tile.TILE_SIZE, by2 = y2 / Tile.TILE_SIZE;
         for (int bx = bx1; bx <= bx2; bx++) {
             for (int by = by1; by <= by2; by++) {
-                Tile t = world.getTile(bx, by);
-                if (t == null || !world.isSolid(bx, by)) {
+                if (!world.isSolid(bx, by)) {
                     continue;
                 }
                 int tx1 = bx * Tile.TILE_SIZE, tx2 = bx * Tile.TILE_SIZE + Tile.TILE_SIZE;
