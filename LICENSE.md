@@ -2,12 +2,9 @@ All graphical and audio assets in the resources folder are licensed under CC-BY-
 
     These works are licensed under a [Creative Commons Attribution-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-sa/4.0/).
 
+    Copyright (C) 2014 Joseph Bernhard.
     Copyright (C) 2014-2015 Colby Skeggs.
     Copyright (C) 2014 Sebastian Reynolds and Alex Chinn.
-
-    Thanks are given to Joseph Bernhard, whose work was crucial to the project but who has not yet
-      granted permission for their work to be relicensed, and therefore whose work cannot be
-      included in this repository.
 
 All audio assets in the audio_resources repository are also licensed under CC-BY-SA 4.0 International
 
