@@ -1,6 +1,6 @@
 --[[
     ioread.lua is a module of cosmOS, a fictional operating system.
-    Copyright (C) 2015 Colby Skeggs
+    Copyright (C) 2015 Cel Skeggs
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by

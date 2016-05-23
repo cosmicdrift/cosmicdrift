@@ -3,7 +3,7 @@ All graphical and audio assets in the resources folder are licensed under CC-BY-
     These works are licensed under a [Creative Commons Attribution-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-sa/4.0/).
 
     Copyright (C) 2014 Joseph Bernhard.
-    Copyright (C) 2014-2015 Colby Skeggs.
+    Copyright (C) 2014-2015 Cel Skeggs.
     Copyright (C) 2014 Sebastian Reynolds and Alex Chinn.
 
 All audio assets in the audio_resources repository are also licensed under CC-BY-SA 4.0 International
@@ -16,7 +16,7 @@ All source code, both Java and Lua, is licensed under the GPL v3 (see COPYING.GP
 
     Cosmic Drift is a computer game about building simulated space stations.
 
-    Copyright (C) 2014-2015 Colby Skeggs.
+    Copyright (C) 2014-2015 Cel Skeggs.
     Copyright (C) 2014 Christopher Quisling.
 
     Thanks are given to Dashiell Shulman, whose contributions were not used, and so are no longer
@@ -34,3 +34,5 @@ All source code, both Java and Lua, is licensed under the GPL v3 (see COPYING.GP
 
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+A brief note on names: Cel Skeggs was previously known by the name of Colby Skeggs.
