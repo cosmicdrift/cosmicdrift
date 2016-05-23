@@ -75,7 +75,7 @@ public class Utils {
         return (Class<T>) t.getClass();
     }
 
-    public static <T> List<T> loadGsonList(Gson g, Reader r, Class<T> element) {
+    public static <T> List<T> loadGsonList(Gson g, Reader r, final Class<T> element) {
         return g.fromJson(r, new ParameterizedType() {
             @Override
             public Type[] getActualTypeArguments() {

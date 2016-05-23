@@ -12,7 +12,7 @@ public class CompTypeAdapter implements JsonSerializer<Component>, JsonDeseriali
     private static <T> Constructor<T> getConstructorN(Class<T> class_, int args) {
         Constructor<T> candidate = null;
         for (Constructor<?> constructor : class_.getConstructors()) {
-            if (constructor.getParameterCount() == args) {
+            if (constructor.getParameterTypes().length == args) {
                 if (candidate == null) {
                     candidate = (Constructor<T>) constructor;
                 } else {
