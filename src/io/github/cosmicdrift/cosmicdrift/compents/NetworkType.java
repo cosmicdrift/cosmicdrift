@@ -34,41 +34,9 @@ public enum NetworkType {
     public final Class<? extends Network> netClass;
     public final Class<? extends ComponentNetwork> cls;
 
-    private NetworkType(Class<? extends Network> nc, Class<? extends ComponentNetwork> cls) {
+    NetworkType(Class<? extends Network> nc, Class<? extends ComponentNetwork> cls) {
         netClass = nc;
         this.cls = cls;
-    }
-
-    public static int requestPower(TileEntity ent, ComponentNetworkPower cmp, int amount) {
-        if (amount < 0) {
-            throw new IllegalArgumentException();
-        }
-        PowerNetwork pnet = cmp.getNetwork(ent);
-        amount = Math.min(amount, pnet.available);
-        pnet.available -= amount;
-        return amount;
-    }
-
-    public static boolean requestPowerOrNothing(TileEntity ent, ComponentNetworkPower cmp, int amount) {
-        if (amount < 0) {
-            throw new IllegalArgumentException();
-        }
-        PowerNetwork pnet = cmp.getNetwork(ent);
-        if (pnet.available < amount) {
-            return false;
-        }
-        pnet.available -= amount;
-        return true;
-    }
-
-    public static int supplyPower(TileEntity ent, ComponentNetworkPower cmp, int amount) {
-        if (amount < 0) {
-            throw new IllegalArgumentException();
-        }
-        PowerNetwork pnet = cmp.getNetwork(ent);
-        int o = pnet.available + amount;
-        pnet.available = Math.min(pnet.capacity, o);
-        return o - pnet.available;
     }
 
     public static void exchangeAir(TileEntity ent, ComponentNetworkFluid cmp, Tile t, int x, int y) {
@@ -118,29 +86,26 @@ public enum NetworkType {
 
     public static final class PowerNetwork extends Network {
 
-        private int capacity, available;
+        private int wattage_available = -1, wattage_consumed = -1;
 
         public PowerNetwork() {
             super(POWER);
         }
 
         @Override
-        public void rejoin() {
-            super.rejoin();
-            for (TileEntity ent : contents) {
-                ComponentNetworkPower cnf = ent.getComponent(ComponentNetworkPower.class);
-                double frac = cnf.capacity / this.capacity;
-                cnf.getNetwork(ent).available += this.available * frac;
-            }
-        }
-
-        @Override
         public void recalculate() {
-            capacity = 0;
+            int last_available = wattage_available, last_consumed = wattage_consumed;
+            wattage_available = wattage_consumed = 0;
             for (TileEntity ent : contents) {
                 ComponentNetworkPower cnf = ent.getComponent(ComponentNetworkPower.class);
-                capacity += cnf.capacity;
-                available += cnf.dumpPreserved(ent);
+                wattage_available += cnf.getAvailableWattage(ent);
+                wattage_consumed += cnf.getRequestedWattage(ent);
+            }
+            //if (last_available != wattage_available || last_consumed != wattage_consumed) {
+            double consumer_fraction = Math.min(wattage_available / (double) wattage_consumed, 1.0f);
+            double producer_fraction = Math.min(wattage_consumed / (double) wattage_available, 1.0f);
+            for (TileEntity ent : contents) {
+                ent.getComponent(ComponentNetworkPower.class).onPowerNetworkUpdate(ent, consumer_fraction, producer_fraction);
             }
             checkInvariants();
         }
@@ -148,29 +113,7 @@ public enum NetworkType {
         @Override
         public void printNetworkDescription(World w) {
             w.print("Power Network:");
-            w.print("Power " + available + " / " + capacity);
-        }
-
-        @Override
-        public void removeForSave(TileEntity ent, ComponentNetwork cmpo) {
-            ComponentNetworkPower cmp = (ComponentNetworkPower) cmpo;
-            //Dump proportion of power.
-            double proportion = cmp.capacity / (double) capacity;
-            int actual = (int) (available * proportion);
-            available -= actual;
-            capacity -= cmp.capacity;
-            cmp.receivePreserved(ent, actual);
-            super.removeForSave(ent, cmp);
-        }
-
-        @Override
-        public void remove(TileEntity ent, ComponentNetwork cmpo) {
-            ComponentNetworkPower cmp = (ComponentNetworkPower) cmpo;
-            //Dump proportion of power.
-            double proportion = cmp.capacity / (double) capacity;
-            int actual = (int) (available * proportion);
-            available -= actual;
-            super.remove(ent, cmp);
+            w.print("Power " + wattage_available + " available and " + wattage_consumed + " expected");
         }
     }
 

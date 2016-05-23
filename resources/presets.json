@@ -8,8 +8,7 @@
         "NetworkPower"
       ],
       [
-        "NetworkPower",
-        5
+        "NetworkPower"
       ]
     ],
     "defaults": {
@@ -21,17 +20,33 @@
     "components": [
       [
         "NetworkPower",
-        20
+        200,
+        "active"
       ],
       [
         "NetworkData"
       ],
       [
-        "LuaComputer"
+        "Button",
+        "turn_on",
+        0,
+        2
+      ],
+      [
+        "SetOnEvent",
+        "turn_on",
+        "active",
+        true
+      ],
+      [
+        "LuaComputer",
+        "active",
+        "power_consumption_fraction"
       ]
     ],
     "defaults": {
-      "item-icon": "item_computer.png"
+      "item-icon": "item_computer.png",
+      "active": false
     }
   },
   {
@@ -73,27 +88,48 @@
     "typename": "door",
     "components": [
       [
-        "EnergyCost",
-        "solid",
-        50
+        "NetworkPower",
+        300,
+        "moving"
       ],
       [
-        "NetworkPower",
-        50
+        "Accumulator",
+        "fraction",
+        "power_consumption_fraction"
+      ],
+      [
+        "AccumulationThreshold",
+        0,
+        "fraction",
+        10,
+        "stop_moving"
+      ],
+      [
+        "SetOnEvent",
+        "stop_moving",
+        "moving",
+        false
+      ],
+      [
+        "ToggleOnEvent",
+        "stop_moving",
+        "solid"
       ],
       [
         "NetworkDataEndpoint",
-        "solid"
+        "moving"
       ],
       [
-        "ActivationSynchronizer",
-        "solid"
-      ],
-      [
-        "ToggleButton",
-        "solid",
+        "Button",
+        "start_moving",
         1,
         3
+      ],
+      [
+        "SetOnEvent",
+        "start_moving",
+        "moving",
+        true
       ],
       [
         "RendererDual",
@@ -104,6 +140,7 @@
     ],
     "defaults": {
       "solid": true,
+      "moving": false,
       "item-icon": "item_door.png"
     }
   },
@@ -136,26 +173,32 @@
       ],
       [
         "NetworkPower",
-        30
+        8000,
+        "enabled"
+      ],
+      [
+        "PowerMinimum",
+        "enabled",
+        0.2
       ],
       [
         "NetworkDataEndpoint",
         "enabled"
       ],
       [
-        "PowerConsumer",
-        "enabled",
-        1
-      ],
-      [
         "GravityGenerator",
-        "enabled"
+        "power_consumption_fraction"
       ],
       [
-        "ToggleButton",
-        "enabled",
+        "Button",
+        "toggle_enabled",
         0,
         5
+      ],
+      [
+        "ToggleOnEvent",
+        "toggle_enabled",
+        "enabled"
       ]
     ],
     "defaults": {
@@ -344,16 +387,12 @@
       ],
       [
         "NetworkPower",
-        500
+        -10000,
+        "enabled"
       ],
       [
         "NetworkDataEndpoint",
         "enabled"
-      ],
-      [
-        "PowerGenerator",
-        "enabled",
-        10
       ]
     ],
     "defaults": {

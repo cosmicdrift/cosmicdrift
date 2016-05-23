@@ -31,7 +31,7 @@ public class ComponentMedkit extends Component {
 
     @Override
     public Object[] saveAsConstructorArguments() {
-        return new Object[] {supplyVariable};
+        return new Object[]{supplyVariable};
     }
 
     @Override

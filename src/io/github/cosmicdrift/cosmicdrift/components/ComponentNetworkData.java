@@ -25,7 +25,7 @@ import java.util.Random;
 public class ComponentNetworkData extends ComponentNetwork<NetworkType.DataNetwork> {
 
     private static final Random rand = new Random();
-    
+
     public static synchronized short generateID(Object obj) {
         return (short) rand.nextInt();
     }

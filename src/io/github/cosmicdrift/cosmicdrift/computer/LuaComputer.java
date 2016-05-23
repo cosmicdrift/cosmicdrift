@@ -19,6 +19,7 @@ package io.github.cosmicdrift.cosmicdrift.computer;
 
 import io.github.cosmicdrift.cosmicdrift.graphics.ResourceManager;
 import io.github.cosmicdrift.cosmicdrift.networks.Packet;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;

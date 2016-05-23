@@ -38,13 +38,13 @@ public class ComponentNetworkDataEndpoint extends ComponentNetworkData {
     public short getNetID(TileEntity ent) {
         return ent.<Short>get("data-netid");
     }
-    
+
     @Override
     public void presave(TileEntity ent) {
         super.presave(ent);
         ent.<Integer>set("data-netid", ent.<Short>get("data-netid").intValue());
     }
-    
+
     @Override
     public void postsave(TileEntity ent) {
         super.postsave(ent);

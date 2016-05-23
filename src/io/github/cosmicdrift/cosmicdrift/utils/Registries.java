@@ -10,10 +10,11 @@ public class Registries {
     public static final ClassRegistry<Component> componentRegistry = new ClassRegistry<>(Component.class);
 
     static {
+        componentRegistry.register(ComponentAccumulationThreshold.class);
+        componentRegistry.register(ComponentAccumulator.class);
         componentRegistry.register(ComponentActivationSynchronizer.class);
         componentRegistry.register(ComponentAirExchanger.class);
         componentRegistry.register(ComponentDispenser.class);
-        componentRegistry.register(ComponentEnergyCost.class);
         componentRegistry.register(ComponentGravityGenerator.class);
         componentRegistry.register(ComponentLuaComputer.class);
         componentRegistry.register(ComponentMarkerWall.class);
@@ -22,12 +23,13 @@ public class Registries {
         componentRegistry.register(ComponentNetworkDataEndpoint.class);
         componentRegistry.register(ComponentNetworkFluid.class);
         componentRegistry.register(ComponentNetworkPower.class);
-        componentRegistry.register(ComponentPowerConsumer.class);
-        componentRegistry.register(ComponentPowerGenerator.class);
+        componentRegistry.register(ComponentPowerMinimum.class);
         componentRegistry.register(ComponentRendererDirectioned.class);
         componentRegistry.register(ComponentRendererDual.class);
         componentRegistry.register(ComponentRendererSimple.class);
-        componentRegistry.register(ComponentToggleButton.class);
+        componentRegistry.register(ComponentSetOnEvent.class);
+        componentRegistry.register(ComponentButton.class);
+        componentRegistry.register(ComponentToggleOnEvent.class);
     }
 
     public static final ClassRegistry<Entity> entityRegistry = new ClassRegistry<>(Entity.class);

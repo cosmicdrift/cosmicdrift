@@ -22,51 +22,49 @@ import io.github.cosmicdrift.cosmicdrift.compents.TileEntity;
 
 public final class ComponentNetworkPower extends ComponentNetwork<NetworkType.PowerNetwork> {
 
-    public final int capacity;
+    // positive for consumption, negative for production.
+    private final int watts;
+    private final String enable;
 
-    public ComponentNetworkPower(int capacity) {
+    public ComponentNetworkPower() {
+        this(0, null);
+    }
+
+    public ComponentNetworkPower(int watts, String enable) {
         super(NetworkType.POWER);
-        if (capacity <= 0) {
-            throw new IllegalArgumentException("Non-positive capacity!");
-        }
-        this.capacity = capacity;
+        this.watts = watts;
+        this.enable = enable;
     }
 
     @Override
     public Object[] saveAsConstructorArguments() {
-        return new Object[]{capacity};
-    }
-
-    public int supplyPower(TileEntity ent, int amount) {
-        return NetworkType.supplyPower(ent, this, amount);
-    }
-
-    public int requestPower(TileEntity ent, int amount) {
-        return NetworkType.requestPower(ent, this, amount);
-    }
-
-    public boolean requestPowerOrNothing(TileEntity ent, int amount) {
-        return NetworkType.requestPowerOrNothing(ent, this, amount);
+        return new Object[]{watts, enable};
     }
 
     @Override
     public void initialize(TileEntity ent) {
-        if (ent.<Integer>get("preservePower") == null) {
-            ent.set("preservePower", 0);
-        }
         super.initialize(ent);
     }
 
-    public void receivePreserved(TileEntity ent, int power) {
-        if (ent.<Number>get("preservePower").intValue() != 0) {
-            throw new RuntimeException("Add power to already-preserved node!");
-        }
-        ent.<Integer>set("preservePower", power);
+    public int getAvailableWattage(TileEntity ent) {
+        return enable != null && ent.<Boolean>get(enable) ? Math.max(0, -watts) : 0;
     }
 
-    public int dumpPreserved(TileEntity ent) {
-        int out = ent.<Number>get("preservePower").intValue();
-        ent.<Integer>set("preservePower", 0);
-        return out;
+    public int getRequestedWattage(TileEntity ent) {
+        return enable != null && ent.<Boolean>get(enable) ? Math.max(0, watts) : 0;
+    }
+
+    @Override
+    public void onVariableChange(TileEntity ent, String var, Object o) {
+        if (enable != null && enable.equals(var)) {
+            // TODO: will this always update the fraction?
+            getNetwork(ent).recalculate();
+        }
+    }
+
+    public void onPowerNetworkUpdate(TileEntity ent, double consumer_fraction, double producer_fraction) {
+        boolean enabled = enable != null && ent.<Boolean>get(enable);
+        ent.set("power_consumption_fraction", watts > 0 && enabled ? consumer_fraction : 0);
+        ent.set("power_production_fraction", watts < 0 && enabled ? producer_fraction : 0);
     }
 }

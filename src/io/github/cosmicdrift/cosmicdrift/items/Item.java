@@ -37,7 +37,7 @@ public abstract class Item {
     public boolean use(World w, EntityPlayer p, int x, int y, double dist) {
         return false;
     }
-    
+
     @Override
     public boolean equals(Object o) {
         return (o.getClass() == getClass()) && ((Item) o).itemName.equals(itemName) && itemEqual((Item) o);
@@ -52,6 +52,6 @@ public abstract class Item {
     }
 
     protected abstract boolean itemEqual(Item item);
-    
+
     protected abstract int itemHash();
 }

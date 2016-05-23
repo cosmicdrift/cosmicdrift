@@ -18,36 +18,39 @@
 package io.github.cosmicdrift.cosmicdrift.components;
 
 import io.github.cosmicdrift.cosmicdrift.compents.TileEntity;
+import io.github.cosmicdrift.cosmicdrift.tiles.Tile;
 
-public class ComponentEnergyCost extends Component {
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-    private final String enableVar;
-    private final int cost;
+public class ComponentButton extends Component {
 
-    public ComponentEnergyCost(String enableVar, int cost) {
-        this.enableVar = enableVar;
-        this.cost = cost;
-        if (cost <= 0) {
-            throw new IllegalArgumentException("Nonpositive energy cost!");
-        }
+    private static final Logger logger = Logger.getLogger("ComponentButton");
+
+    private final String event;
+    private final int minimum;
+    private final int maximum;
+
+    public ComponentButton(String event, int minimum, int maximum) {
+        this.event = event;
+        this.minimum = minimum;
+        this.maximum = maximum;
     }
 
     @Override
     public Object[] saveAsConstructorArguments() {
-        return new Object[]{enableVar, cost};
+        return new Object[]{event, minimum, maximum};
     }
 
     @Override
-    public boolean beforeVariableChange(TileEntity ent, String var, Object o) {
-        if (!var.equals(enableVar)) {
+    public boolean onActivate(TileEntity ent, double dist) {
+        if (dist >= minimum * Tile.TILE_SIZE && dist <= maximum * Tile.TILE_SIZE) {
+            logger.log(Level.INFO, "Activated {0} at {1}", new Object[]{ent, dist});
+            ent.onUserEvent(event);
+            return true;
+        } else {
+            logger.log(Level.INFO, "Failed to activate {0} at {1}", new Object[]{ent, dist});
             return false;
         }
-        boolean b = (Boolean) o;
-        Boolean old = ent.<Boolean>get(enableVar);
-        if (old == null || b == old) {
-            return false;
-        }
-        // Deny variable change if there isn't enough power.
-        return !ent.getComponent(ComponentNetworkPower.class).requestPowerOrNothing(ent, cost);
     }
 }

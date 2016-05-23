@@ -1,0 +1,30 @@
+
+Power simulation!
+
+This is supposed to be somewhat accurate, but also leave out a bunch of details that would require complicated
+simulation and lots of work to use.
+
+The basic idea is that there are a bunch of nodes:
+
+       C   C   C   C
+       |   |   |   |
+    C --------------- C
+       |   |   |   |
+       C   C   C   C
+           |
+           |--C
+           |
+     P--P--P--P--P--P--P
+
+    C stands for a power-consuming entity and P stands for a power-producing entity.
+
+In this example, all of these entities are part of the same power network.
+
+Power is measured entirely in Watts. Rather than attempt to simulate voltage and amperage on the line, the simulation
+simply tracks Watt consumption and production.
+
+The network does not simulate power loss - rather, it simply tracks the current consumption and production levels, and
+if there is insufficient power, shuts off or scales down various power consumers. Different power consumers may respond
+differently to low power conditions.
+
+Watts are measured in whole numbers.

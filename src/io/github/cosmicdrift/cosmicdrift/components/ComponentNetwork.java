@@ -21,6 +21,7 @@ import io.github.cosmicdrift.cosmicdrift.compents.Network;
 import io.github.cosmicdrift.cosmicdrift.compents.NetworkType;
 import io.github.cosmicdrift.cosmicdrift.compents.TileEntity;
 import io.github.cosmicdrift.cosmicdrift.World;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 

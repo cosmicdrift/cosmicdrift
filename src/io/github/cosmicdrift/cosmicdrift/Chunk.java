@@ -56,12 +56,12 @@ public final class Chunk {
         if (contents.length != CHUNK_SIZE) {
             throw new RuntimeException("Bad chunk size!");
         }
-        for (int x=0; x<CHUNK_SIZE; x++) {
+        for (int x = 0; x < CHUNK_SIZE; x++) {
             Tile[] column = contents[x];
             if (column.length != CHUNK_SIZE) {
                 throw new RuntimeException("Bad chunk size!");
             }
-            for (int y=0; y<CHUNK_SIZE; y++) {
+            for (int y = 0; y < CHUNK_SIZE; y++) {
                 if (column[y] != null) {
                     needUpdate.add(x | (y << 6));
                 }
@@ -96,7 +96,7 @@ public final class Chunk {
         for (TileEntity t : tileEntityList) {
             t.tick();
         }
-        for (Iterator<Entity> it = entities.iterator(); it.hasNext();) { // TODO: Automatically move entities between chunks.
+        for (Iterator<Entity> it = entities.iterator(); it.hasNext(); ) { // TODO: Automatically move entities between chunks.
             Entity e = it.next();
             if (e.tick()) {
                 it.remove();

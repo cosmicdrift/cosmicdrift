@@ -33,7 +33,7 @@ public class Inventory {
     public final int slotCount;
     public final ArrayList<Item> inv = new ArrayList<>();
     public static final int DEFAULT_INVSIZE = 32;
-    
+
     public static Inventory defaultInventory(World w) {
         Inventory out = new Inventory(DEFAULT_INVSIZE);
         for (int i = 0; i < 5; i++) {

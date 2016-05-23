@@ -26,21 +26,21 @@ public class ComponentGravityGenerator extends Component {
 
     public final int rWid = 8, lWid = 8, tHei = 8, bHei = 8;
     public final int gravityScale = 4;
-    private final String enabledVar;
+    private final String fractionalVar;
 
-    public ComponentGravityGenerator(String enabledVar) {
-        this.enabledVar = enabledVar;
+    public ComponentGravityGenerator(String fractionalVar) {
+        this.fractionalVar = fractionalVar;
     }
 
     @Override
     public Object[] saveAsConstructorArguments() {
-        return new Object[]{enabledVar};
+        return new Object[]{fractionalVar};
     }
 
     @Override
     public void onTick(TileEntity ent) {
-        ComponentNetworkPower power = ent.getComponent(ComponentNetworkPower.class);
-        if (enabledVar != null && !ent.<Boolean>get(enabledVar)) {
+        double fraction = Math.max(0, Math.min(1, ent.<Double>get(fractionalVar)));
+        if (fraction == 0) {
             return;
         }
         int mx = ent.x * Tile.TILE_SIZE;
@@ -54,8 +54,7 @@ public class ComponentGravityGenerator extends Component {
                 if (e.x2 <= rightEnd && e.x1 >= leftEnd && e.y2 <= bottomEnd && e.y1 >= topEnd) {
                     // TODO: Fix this so that this can go in reverse gravity.
                     // TODO: More energy for further away.
-                    e.vY += power.requestPower(ent, gravityScale);
-                    // TODO: Figure out how to make this not break separation of concerns. Power shouldn't be handled here!
+                    e.vY += gravityScale * fraction;
                 }
             }
         }

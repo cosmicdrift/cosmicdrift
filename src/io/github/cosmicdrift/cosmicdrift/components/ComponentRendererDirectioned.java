@@ -30,8 +30,8 @@ public class ComponentRendererDirectioned extends Component {
     private final String[] lookup;
 
     private static final String[] defaultLookup = new String[]{
-        "____", "l___", "_r__", "lr__", "__u_", "l_u_", "_ru_", "lru_",
-        "___d", "l__d", "_r_d", "lr_d", "__ud", "l_ud", "_rud", "lrud"};
+            "____", "l___", "_r__", "lr__", "__u_", "l_u_", "_ru_", "lru_",
+            "___d", "l__d", "_r_d", "lr_d", "__ud", "l_ud", "_rud", "lrud"};
 
     public ComponentRendererDirectioned(String prefix, String ctype) {
         this.prefix = prefix;

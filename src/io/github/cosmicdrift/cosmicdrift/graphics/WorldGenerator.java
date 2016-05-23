@@ -31,7 +31,7 @@ public class WorldGenerator {
         gen.generate();
         return gen.world;
     }
-    
+
     public final World world;
 
     public WorldGenerator() throws IOException {
@@ -41,7 +41,7 @@ public class WorldGenerator {
     private void fill(int x, int y, boolean air) {
         world.putTile(x, y, new Tile(air ? 200 : 0, 0, air ? 800 : 0));
     }
-    
+
     private void entity(int x, int y, String type) {
         world.addTileEntity(new TileEntity(world, TileEntityType.forName(type), x, y));
     }

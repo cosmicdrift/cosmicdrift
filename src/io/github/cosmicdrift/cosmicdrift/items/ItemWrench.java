@@ -28,6 +28,7 @@ import java.util.logging.Logger;
 public class ItemWrench extends Item {
 
     private static final Logger logger = Logger.getLogger("ItemWrench");
+
     static {
         logger.setLevel(Level.ALL);
     }

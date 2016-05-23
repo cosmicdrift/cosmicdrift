@@ -158,6 +158,12 @@ public class TileEntity {
         }
     }
 
+    public void onUserEvent(String eventName) {
+        for (Component cmp : type.components) {
+            cmp.onUserEvent(this, eventName);
+        }
+    }
+
     public <T> T get(String var) {
         return (T) vars.get(var);
     }

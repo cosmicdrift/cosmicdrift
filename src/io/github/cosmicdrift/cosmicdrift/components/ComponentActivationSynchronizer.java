@@ -29,7 +29,7 @@ public class ComponentActivationSynchronizer extends Component {
 
     @Override
     public Object[] saveAsConstructorArguments() {
-        return new Object[] {variable};
+        return new Object[]{variable};
     }
 
     @Override

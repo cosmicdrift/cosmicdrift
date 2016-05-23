@@ -27,9 +27,18 @@ import java.util.HashMap;
 
 public class ComponentLuaComputer extends Component {
 
+    public static final double MIN_POWER_FRACTION = 0.1f;
+    private final String activeVar;
+    private final String powerFactorVar;
+
+    public ComponentLuaComputer(String activeVar, String powerFactorVar) {
+        this.activeVar = activeVar;
+        this.powerFactorVar = powerFactorVar;
+    }
+
     @Override
     public Object[] saveAsConstructorArguments() {
-        return new Object[0];
+        return new Object[]{activeVar, powerFactorVar};
     }
 
     public short getNetID(TileEntity ent) {
@@ -65,9 +74,17 @@ public class ComponentLuaComputer extends Component {
     @Override
     public void onTick(TileEntity ent) {
         LuaComputer core = ent.<LuaComputer>get("cpu-core");
-        if (ent.getComponent(ComponentNetworkPower.class).requestPower(ent, 5) < 5) {
-            ent.set("cpu-core", null);
-            updateIcon(ent);
+        boolean active = ent.get(activeVar);
+        double power = ent.get(powerFactorVar);
+        if (active && power < MIN_POWER_FRACTION) {
+            active = false;
+            ent.set(activeVar, active);
+        }
+        if (!active) {
+            if (core != null) {
+                ent.set("cpu-core", null);
+                updateIcon(ent);
+            }
             return;
         }
         if (core == null) {
@@ -75,7 +92,7 @@ public class ComponentLuaComputer extends Component {
             ent.set("cpu-core", core);
             updateIcon(ent);
         }
-        core.cycle(300);
+        core.cycle((int) (300 * power));
         if (!core.sending.isEmpty()) {
             NetworkType.transmit(ent, ent.getComponent(ComponentNetworkData.class), core.sending.removeFirst());
         }
@@ -96,7 +113,7 @@ public class ComponentLuaComputer extends Component {
 
     public void keyPress(TileEntity ent, char key) {
         LuaComputer core = ent.get("cpu-core");
-        if (core != null && key >= 0 && key <= 127) { // only ASCII for these computers!
+        if (core != null && key <= 127) { // only ASCII for these computers!
             core.keyPress((byte) key);
         }
     }

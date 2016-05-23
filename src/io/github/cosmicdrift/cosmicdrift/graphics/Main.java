@@ -245,9 +245,9 @@ public class Main extends JPanel { // TODO: Make negative coordinates work bette
         boolean right = pressedKeys.contains(dvorak ? KeyEvent.VK_E : KeyEvent.VK_D);
         boolean up = pressedKeys.contains(dvorak ? KeyEvent.VK_COMMA : KeyEvent.VK_W);
         boolean down = pressedKeys.contains(dvorak ? KeyEvent.VK_O : KeyEvent.VK_S);
-        float rx = (right ? 1 : 0) - (left ? 1 : 0);
-        float ry = (down ? 1 : 0) - (up ? 1 : 0);
-        float rel = (float) Math.sqrt(rx * rx + ry * ry);
+        double rx = (right ? 1 : 0) - (left ? 1 : 0);
+        double ry = (down ? 1 : 0) - (up ? 1 : 0);
+        double rel = Math.sqrt(rx * rx + ry * ry);
         EntityPlayer p = world.ply;
         if (rel != 0) {
             boolean hit = p.hasStep(rx > 0 ? -1 : rx < 0 ? 1 : 0, ry > 0 ? -1 : ry < 0 ? 1 : 0);

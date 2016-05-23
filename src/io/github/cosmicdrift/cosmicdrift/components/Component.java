@@ -21,7 +21,7 @@ import io.github.cosmicdrift.cosmicdrift.compents.TileEntity;
 import io.github.cosmicdrift.cosmicdrift.networks.Packet;
 
 public abstract class Component {
-    
+
     public void onTick(TileEntity ent) {
     }
 
@@ -64,5 +64,9 @@ public abstract class Component {
 
     public void postsave(TileEntity aThis) {
         // Don't care.
+    }
+
+    public void onUserEvent(TileEntity ent, String name) {
+        // Don't care
     }
 }
